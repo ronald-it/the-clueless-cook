@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import heroImage from '../../public/images/hero-image.jpg'
 import RecipeCard from '@/components/RecipeCard'
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [recipes, setRecipes] = useState()
   // Declare request variables for type, query, URI, endpoint, API ID and API Key
   const URI = 'https://api.edamam.com';
   const endpoint = '/api/recipes/v2';
@@ -11,18 +13,19 @@ export default function Home() {
   const query = 'potato'
   const type = 'public'
 
-  async function fetchData() {
-    try {
-      const response = await fetch(`${URI}${endpoint}?type=${type}&app_id=${API_ID}&app_key=${API_KEY}&q=${query}`)
-      const recipes = await response.json()
-      console.log(recipes)
-    } catch (err) {
-      console.log(err)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`${URI}${endpoint}?type=${type}&app_id=${API_ID}&app_key=${API_KEY}&q=${query}`)
+        const recipes = await response.json()
+        console.log(recipes.hits[1].recipe.image)
+        setRecipes(recipes.hits)
+      } catch (err) {
+        console.log(err)
+      }
     }
-  }
-  
-
-  fetchData()
+    fetchData()
+  }, [API_KEY])
 
   return (
     <>
@@ -45,7 +48,7 @@ export default function Home() {
     </div>
     </header>
     <main className='border-2 border-blue-500'>
-      <RecipeCard/>
+      {recipes && <RecipeCard image={recipes[0].recipe.image}/>}
     </main>
     </>
   )
