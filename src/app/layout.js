@@ -1,9 +1,9 @@
-import "../styles/globals.css";
+import '../styles/globals.css';
 import FontLoader from './FontLoader';
 
 export const metadata = {
-  title: "Browser tab title",
-  description: "Browser tab description",
+  title: 'Browser tab title',
+  description: 'Browser tab description',
   icons: {
     icon: '/images/favicon-32x32.png',
   },
@@ -11,13 +11,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <FontLoader/>
+        <FontLoader />
       </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
