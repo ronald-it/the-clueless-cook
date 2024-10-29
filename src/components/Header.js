@@ -3,7 +3,7 @@ import CustomImage from './CustomImage/CustomImage';
 
 export default function Header({ toggleModal }) {
   return (
-    <header className='flex justify-around items-center py-4'>
+    <header className='flex justify-around items-center py-4 bg-[#EEEEEE]'>
       <h1 className='font-light text-darkblue'>The Clueless Cook</h1>
       <button className='w-8' onClick={toggleModal}>
         <CustomImage

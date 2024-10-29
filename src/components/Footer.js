@@ -2,7 +2,7 @@ import CustomImage from './CustomImage/CustomImage';
 
 export default function Footer() {
   return (
-    <footer className='flex flex-col items-center bg-darkblue py-16 [&>*]:flex [&>*]:flex-col [&>*]:items-center'>
+    <footer id='footer' className='flex flex-col items-center bg-darkblue py-16 [&>*]:flex [&>*]:flex-col [&>*]:items-center'>
       <div>
         <h3 className='text-lightblue font-semibold mb-2'>Information</h3>
         <div className='flex flex-col items-center [&>*]:text-white [&>*]:font-light [&>*]:py-1'>

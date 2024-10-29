@@ -21,26 +21,28 @@ export default function Home() {
         ariaHideApp={false}
         className='h-full p-4'
       >
-        <div className='h-full w-full flex justify-center items-center bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-2xl [&>*]:font-light'>
+        <div className='h-full w-full flex justify-center items-center bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light'>
           <button className='absolute top-8 right-8 w-6' onClick={toggleModal}>
             <CloseIcon />
           </button>
           <div className='flex flex-col w-3/4 justify-between items-center [&>*]:w-full [&>*]:flex [&>*]:justify-center [&>*]:mb-4 [&>*]:pb-4 [&>*]:border-b-2 [&>*]:border-white [&>*:last-child]:border-none [&>*:last-child]:m-0 [&>*:last-child]:p-0'>
-            <span>
+            <button onClick={toggleModal}>
               <Link href='/'>Home</Link>
-            </span>
-            <span>
-              <Link href='/'>About</Link>
-            </span>
+            </button>
+            <button onClick={toggleModal}>
+              <a href='#footer'>About</a>
+            </button>
             <span>
               <Link href='/calculator'>Calculator</Link>
             </span>
             <span>
               <Link href='/login'>Login</Link>
             </span>
-            <span>
-              <Link href='/register'>Register</Link>
-            </span>
+            <div>
+              <span className='w-full flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-1'>
+                <Link href='/register'>Register</Link>
+              </span>
+            </div>
           </div>
         </div>
       </ReactModal>
