@@ -32,16 +32,16 @@ export default function Footer() {
         <h3 className='text-lightblue font-semibold mt-6 mb-4'>Social</h3>
         <div className='flex [&>*]:bg-lightblue [&>*]:w-8 [&>*]:h-8 [&>*]:p-2 [&>*]:rounded-full [&>*]:mx-2'>
           <span>
-            <CustomImage src='images/facebook.svg' width={100} height={100} />
+            <CustomImage src='images/facebook.svg' alt='Facebook icon' width={100} height={100} />
           </span>
           <span>
-            <CustomImage src='images/instagram.svg' width={100} height={100} />
+            <CustomImage src='images/instagram.svg' alt='Instagram icon' width={100} height={100} />
           </span>
           <span>
-            <CustomImage src='images/linkedin.svg' width={100} height={100} />
+            <CustomImage src='images/linkedin.svg' alt='LinkedIn icon' width={100} height={100} />
           </span>
           <span>
-            <CustomImage src='images/twitter.svg' width={100} height={100} />
+            <CustomImage src='images/twitter.svg' alt='Twitter icon' width={100} height={100} />
           </span>
         </div>
       </div>

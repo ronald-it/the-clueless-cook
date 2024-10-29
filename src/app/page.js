@@ -5,6 +5,9 @@ import Header from '../components/Header';
 import ReactModal from 'react-modal';
 import { useState } from 'react';
 import CloseIcon from '../components/CloseIcon';
+import CustomImage from '../components/CustomImage/CustomImage';
+import ArrowRightIcon from '../components/ArrowRightIcon';
+import RecipeCard from '../components/RecipeCard';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,7 +49,30 @@ export default function Home() {
           </div>
         </div>
       </ReactModal>
-      <main></main>
+      <main>
+        <section className='relative'>
+          <CustomImage
+            src='images/hero-image.jpg'
+            alt='Hero image'
+            className='w-full h-96 object-cover'
+            width={100}
+            height={100}
+          />
+          <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap'>
+            <h2>Delicious Recipes.</h2>
+            <h2 className='font-light'>Daily Updated</h2>
+            <button className='mt-2 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center'>
+              <span className='mr-1'>Find Recipes</span>
+              <span>
+                <ArrowRightIcon />
+              </span>
+            </button>
+          </div>
+        </section>
+        <section className='flex justify-center pb-10 -mt-16'>
+          <RecipeCard />
+        </section>
+      </main>
       <Footer />
     </>
   );
