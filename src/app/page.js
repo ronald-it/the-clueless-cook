@@ -64,7 +64,7 @@ export default function Home() {
             <h2>Delicious Recipes.</h2>
             <h2 className='font-light'>Daily Updated</h2>
             <button className='mt-2 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center'>
-              <span className='mr-1'>Find Recipes</span>
+              <span className='mr-1 py-1.5'>Find Recipes</span>
               <span>
                 <ArrowRightIcon />
               </span>

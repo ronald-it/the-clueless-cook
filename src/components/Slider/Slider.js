@@ -7,17 +7,23 @@ import 'swiper/css/pagination';
 import { useRef } from 'react';
 import RecipeCard from '../RecipeCard';
 import styles from './Slider.module.scss';
+import ArrowRightIcon from '../ArrowRightIcon';
 
 export default function Slider() {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
-    swiperRef.current.swiper.slidePrev();
+    if (swiperRef.current && swiperRef.current.slidePrev) {
+      swiperRef.current.slidePrev();
+    }
   };
 
   const handleNext = () => {
-    swiperRef.current.swiper.slideNext();
+    if (swiperRef.current && swiperRef.current.slideNext) {
+      swiperRef.current.slideNext();
+    }
   };
+
   return (
     <Swiper
       onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -43,10 +49,22 @@ export default function Slider() {
         <RecipeCard recipeTitle='3' />
       </SwiperSlide>
       <div className='h-10'>
-        <div
-          className='swiper-pagination'
-        ></div>
+        <div className='swiper-pagination'></div>
       </div>
+      <button
+        onClick={handlePrev}
+        className='absolute left-8 z-20 p-2 bg-white rounded-full shadow-3xl rotate-180'
+        style={{ top: 'calc(50% - 2.5rem)' }}
+      >
+        <ArrowRightIcon />
+      </button>
+      <button
+        onClick={handleNext}
+        className='absolute right-8 z-20 p-2 bg-lightblue rounded-full shadow-3xl'
+        style={{ top: 'calc(50% - 2.5rem)' }}
+      >
+        <ArrowRightIcon />
+      </button>
     </Swiper>
   );
 }
