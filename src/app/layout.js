@@ -2,8 +2,8 @@ import '../styles/globals.css';
 import FontLoader from './FontLoader';
 
 export const metadata = {
-  title: 'Browser tab title',
-  description: 'Browser tab description',
+  title: 'The Clueless Cook',
+  description: 'A web app for searching and exploring recipes',
   icons: {
     icon: '/images/favicon-32x32.png',
   },

@@ -8,12 +8,14 @@ import CloseIcon from '../components/CloseIcon';
 import CustomImage from '../components/CustomImage/CustomImage';
 import ArrowRightIcon from '../components/ArrowRightIcon';
 import RecipeCard from '../components/RecipeCard';
+import Slider from '../components/Slider/Slider';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+
   return (
     <>
       <Header toggleModal={toggleModal} />
@@ -69,8 +71,8 @@ export default function Home() {
             </button>
           </div>
         </section>
-        <section className='flex justify-center pb-10 -mt-16'>
-          <RecipeCard />
+        <section className='pb-10 -mt-16 relative'>
+          <Slider />
         </section>
       </main>
       <Footer />
