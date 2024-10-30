@@ -71,7 +71,7 @@ export default function Home() {
             </button>
           </div>
         </section>
-        <section className='pb-10 -mt-16 relative'>
+        <section className='-mt-16 relative'>
           <Slider />
         </section>
       </main>

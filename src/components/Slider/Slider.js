@@ -1,6 +1,6 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -23,16 +23,17 @@ export default function Slider() {
       onSwiper={(swiper) => (swiperRef.current = swiper)}
       modules={[Navigation, Pagination]}
       spaceBetween={10}
-      slidesPerView={1}
+      slidesPerView={1.2}
+      centeredSlides={true}
+      initialSlide={1}
       pagination={{
         el: '.swiper-pagination',
         clickable: true,
         bulletActiveClass: styles.bulletActive,
       }}
       loop={true}
-      style={{overflow: 'visible'}}
     >
-      <SwiperSlide className='shadow-3xl rounded-md'>
+      <SwiperSlide>
         <RecipeCard recipeTitle='1' />
       </SwiperSlide>
       <SwiperSlide>
@@ -41,14 +42,11 @@ export default function Slider() {
       <SwiperSlide>
         <RecipeCard recipeTitle='3' />
       </SwiperSlide>
-      <div
-        className='swiper-pagination h-10 flex justify-center items-end'
-        style={{
-          position: 'absolute',
-          bottom: '-1.5rem',
-          zIndex: 9999,
-        }}
-      ></div>
+      <div className='h-10'>
+        <div
+          className='swiper-pagination'
+        ></div>
+      </div>
     </Swiper>
   );
 }
