@@ -30,13 +30,11 @@ export default function Home() {
   const [recipes, setRecipes] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const recipeCards = Array.from({ length: 20 }, (_, i) => i);
-
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
@@ -63,7 +61,7 @@ export default function Home() {
         },
       });
 
-      setRecipes(response.data.hits);
+      setRecipes(response.data.hits.recipe);
     } catch (error) {
       console.log(error);
     }
@@ -208,7 +206,7 @@ export default function Home() {
         </section>
 
         <section className='-mt-16 relative'>
-          <Slider />
+          <Slider carouselRecipes={carouselRecipeCards} />
         </section>
 
         <section>
@@ -313,9 +311,20 @@ export default function Home() {
         </section>
 
         <section className='p-6 grid grid-cols-1 gap-y-6'>
-          {recipeCards.map((recipeCard) => {
-            return <RecipeCard key={recipeCard} />;
-          })}
+          {recipes &&
+            recipes.map((recipe) => {
+              return (
+                <RecipeCard
+                  key={recipe.uri.split('_')[1]}
+                  link={`/recipe/${recipe.uri.split('_')[1]}`}
+                  image={recipe.image}
+                  name={recipe.label}
+                  calories={recipe.calories}
+                  ingredients={recipe.ingredients.length}
+                  time={recipe.totalTime}
+                />
+              );
+            })}
         </section>
       </main>
 

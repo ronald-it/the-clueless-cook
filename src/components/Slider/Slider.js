@@ -9,7 +9,7 @@ import RecipeCard from '../RecipeCard';
 import styles from './Slider.module.scss';
 import ArrowRightIcon from '../ArrowRightIcon';
 
-export default function Slider() {
+export default function Slider({ carouselRecipes }) {
   const swiperRef = useRef(null);
 
   const handlePrev = () => {
@@ -39,15 +39,21 @@ export default function Slider() {
       }}
       loop={true}
     >
-      <SwiperSlide>
-        <RecipeCard recipeTitle='1' />
-      </SwiperSlide>
-      <SwiperSlide>
-        <RecipeCard recipeTitle='2' />
-      </SwiperSlide>
-      <SwiperSlide>
-        <RecipeCard recipeTitle='3' />
-      </SwiperSlide>
+      {carouselRecipes &&
+        carouselRecipes.map((recipe) => {
+          return (
+            <SwiperSlide key={recipe.uri.split('_')[1]}>
+              <RecipeCard
+                link={`/recipe/${recipe.uri.split('_')[1]}`}
+                image={recipe.image}
+                name={recipe.label}
+                calories={recipe.calories}
+                ingredients={recipe.ingredients.length}
+                time={recipe.totalTime}
+              />
+            </SwiperSlide>
+          );
+        })}
       <div className='h-10'>
         <div className='swiper-pagination'></div>
       </div>
