@@ -19,11 +19,43 @@ export default function Home() {
   const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 
   // Initialize useState
+  const [formState, setFormState] = useState({
+    recipe: '',
+    meal: '',
+    cuisine: '',
+    diet: '',
+    time: '',
+  });
   const [carouselRecipeCards, setCarouselRecipeCards] = useState();
+  const [recipes, setRecipes] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const recipeCards = Array.from({ length: 20 }, (_, i) => i);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
+  };
+  const fetchSearchResults = async (searchParams) => {
+    const {recipe, meal, cuisine, diet, time} = searchParams;
+    try {
+      const requiredApiParams = {
+        type: 'public',
+        app_id: API_ID,
+        app_key: API_KEY,
+      };
+      const response = await axios.get(`${URI}${endpoint}`, {
+        params: {
+          ...requiredApiParams,
+          q: recipe,
+          mealType: meal ? meal : null,
+          cuisineType: cuisine ? cuisine : null,
+          diet: diet ? diet : null,
+          time: time ? time : null,
+        },
+      });
+
+      setRecipes(response.data.hits);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -101,9 +133,21 @@ export default function Home() {
 
   useEffect(() => console.log(carouselRecipeCards), [carouselRecipeCards]);
 
+  useEffect(() => console.log(recipes), [recipes]);
+
+  useEffect(() => console.log(formState), [formState]);
+
+  function handleChange(e) {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  }
+
   return (
     <>
       <Header toggleModal={toggleModal} />
+
       <ReactModal
         isOpen={isModalOpen}
         onRequestClose={toggleModal}
@@ -137,6 +181,7 @@ export default function Home() {
           </div>
         </div>
       </ReactModal>
+
       <main>
         <section className='relative'>
           <CustomImage
@@ -157,31 +202,118 @@ export default function Home() {
             </button>
           </div>
         </section>
+
         <section className='-mt-16 relative'>
           <Slider />
         </section>
-        <section className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*]:px-2.5 [&>*]:py-3.5 [&>*]:rounded [&>*]:font-light [&>*]:text-sm [&>*:last-child]:font-semibold'>
-          <input type='search' placeholder='Recipe search' className='grid-in-[recipe]' />
-          <select className='grid-in-[meal]'>
-            <option>Meal</option>
-          </select>
-          <select className='grid-in-[cuisine]'>
-            <option>Cuisine</option>
-          </select>
-          <select className='grid-in-[diet]'>
-            <option>Diet</option>
-          </select>
-          <select className='grid-in-[time]'>
-            <option>Time</option>
-          </select>
-          <button className='grid-in-[search] bg-lightblue text-darkblue'>Search</button>
+
+        <section>
+          <form
+            className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold'
+            onSubmit={(e) => {
+              e.preventDefault();
+              fetchSearchResults(formState);
+            }}
+          >
+            <label className='grid-in-[recipe]' htmlFor='recipe'>
+              <input
+                name='recipe'
+                id='recipe'
+                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                type='search'
+                placeholder='Recipe search'
+                onChange={handleChange}
+              />
+            </label>
+            <label className='grid-in-[meal]' htmlFor='meal'>
+              <select
+                name='meal'
+                id='meal'
+                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                onChange={handleChange}
+              >
+                <option value=''>Meal type</option>
+                <option value='breakfast'>Breakfast</option>
+                <option value='brunch'>Brunch</option>
+                <option value='lunch/dinner'>Lunch/Dinner</option>
+                <option value='snack'>Snack</option>
+                <option value='teatime'>Tea time</option>
+              </select>
+            </label>
+            <label className='grid-in-[cuisine]' htmlFor='cuisine'>
+              <select
+                name='cuisine'
+                id='cuisine'
+                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                onChange={handleChange}
+              >
+                <option value=''>Cuisine</option>
+                <option value='american'>American</option>
+                <option value='asian'>Asian</option>
+                <option value='british'>British</option>
+                <option value='caribbean'>Caribbean</option>
+                <option value='central europe'>Central Europe</option>
+                <option value='chinese'>Chinese</option>
+                <option value='eastern europe'>Eastern Europe</option>
+                <option value='french'>French</option>
+                <option value='greek'>Greek</option>
+                <option value='indian'>Indian</option>
+                <option value='italian'>Italian</option>
+                <option value='japanese'>Japanese</option>
+                <option value='korean'>Korean</option>
+                <option value='kosher'>Kosher</option>
+                <option value='mediterranean'>Mediterranean</option>
+                <option value='mexican'>Mexican</option>
+                <option value='middle eastern'>Middle Eastern</option>
+                <option value='nordic'>Nordic</option>
+                <option value='south american'>South American</option>
+                <option value='south east asian'>South East Asian</option>
+                <option value='world'>World</option>
+              </select>
+            </label>
+            <label className='grid-in-[diet]' htmlFor='diet'>
+              <select
+                name='diet'
+                id='diet'
+                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                onChange={handleChange}
+              >
+                <option value=''>Diet</option>
+                <option value='balanced'>Balanced</option>
+                <option value='high-fiber'>High-Fiber</option>
+                <option value='high-protein'>High-Protein</option>
+                <option value='low-carb'>Low-Carb</option>
+                <option value='low-fat'>Low-Fat</option>
+                <option value='low-sodium'>Low-Sodium</option>
+              </select>
+            </label>
+            <label className='grid-in-[time]' htmlFor='time'>
+              <select
+                name='time'
+                id='time'
+                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                onChange={handleChange}
+              >
+                <option value=''>Time</option>
+                <option value='0-15'>0-15 min.</option>
+                <option value='16-30'>16-30 min.</option>
+                <option value='31-60'>31-60 min.</option>
+                <option value='61%2B'>More than 60 min.</option>
+              </select>
+            </label>
+            <button className='grid-in-[search] bg-lightblue text-darkblue rounded' type='submit'>
+              Search
+            </button>
+          </form>
         </section>
+
         <section className='p-6 grid grid-cols-1 gap-y-6'>
           {recipeCards.map((recipeCard) => {
             return <RecipeCard key={recipeCard} />;
           })}
         </section>
       </main>
+
       <Footer />
     </>
   );
