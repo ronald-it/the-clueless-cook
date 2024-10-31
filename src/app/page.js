@@ -29,18 +29,29 @@ export default function Home() {
   const [carouselRecipeCards, setCarouselRecipeCards] = useState();
   const [recipes, setRecipes] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const recipeCards = Array.from({ length: 20 }, (_, i) => i);
+
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+
+  const handleChange = () => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const fetchSearchResults = async (searchParams) => {
-    const {recipe, meal, cuisine, diet, time} = searchParams;
+    const { recipe, meal, cuisine, diet, time } = searchParams;
     try {
       const requiredApiParams = {
         type: 'public',
         app_id: API_ID,
         app_key: API_KEY,
       };
+
       const response = await axios.get(`${URI}${endpoint}`, {
         params: {
           ...requiredApiParams,
@@ -137,13 +148,6 @@ export default function Home() {
 
   useEffect(() => console.log(formState), [formState]);
 
-  function handleChange(e) {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  }
-
   return (
     <>
       <Header toggleModal={toggleModal} />
@@ -235,7 +239,8 @@ export default function Home() {
                 <option value=''>Meal type</option>
                 <option value='breakfast'>Breakfast</option>
                 <option value='brunch'>Brunch</option>
-                <option value='lunch/dinner'>Lunch/Dinner</option>
+                <option value='lunch'>Lunch</option>
+                <option value='dinner'>Dinner</option>
                 <option value='snack'>Snack</option>
                 <option value='teatime'>Tea time</option>
               </select>
