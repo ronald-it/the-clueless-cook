@@ -8,12 +8,15 @@ import CloseIcon from '../components/CloseIcon';
 import CustomImage from '../components/CustomImage/CustomImage';
 import ArrowRightIcon from '../components/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
+import RecipeCard from '../components/RecipeCard';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
+
+  const recipeCards = Array.from({ length: 20 }, (_, i) => i);
 
   return (
     <>
@@ -24,6 +27,7 @@ export default function Home() {
         shouldCloseOnOverlayClick={true}
         ariaHideApp={false}
         className='h-full p-4'
+        style={{ overlay: { zIndex: 9999 } }}
       >
         <div className='h-full w-full flex justify-center items-center bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light'>
           <button className='absolute top-8 right-8 w-6' onClick={toggleModal}>
@@ -74,11 +78,7 @@ export default function Home() {
           <Slider />
         </section>
         <section className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*]:px-2.5 [&>*]:py-3.5 [&>*]:rounded [&>*]:font-light [&>*]:text-sm [&>*:last-child]:font-semibold'>
-          <input
-            type='search'
-            placeholder='Recipe search'
-            className='grid-in-[recipe]'
-          />
+          <input type='search' placeholder='Recipe search' className='grid-in-[recipe]' />
           <select className='grid-in-[meal]'>
             <option>Meal</option>
           </select>
@@ -93,7 +93,11 @@ export default function Home() {
           </select>
           <button className='grid-in-[search] bg-lightblue text-darkblue'>Search</button>
         </section>
-        <section className='p-4'>Search results</section>
+        <section className='p-6 grid grid-cols-1 gap-y-6'>
+          {recipeCards.map((recipeCard) => {
+            return <RecipeCard key={recipeCard} />;
+          })}
+        </section>
       </main>
       <Footer />
     </>
