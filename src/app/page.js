@@ -7,7 +7,6 @@ import { useState } from 'react';
 import CloseIcon from '../components/CloseIcon';
 import CustomImage from '../components/CustomImage/CustomImage';
 import ArrowRightIcon from '../components/ArrowRightIcon';
-import RecipeCard from '../components/RecipeCard';
 import Slider from '../components/Slider/Slider';
 
 export default function Home() {
@@ -74,6 +73,27 @@ export default function Home() {
         <section className='-mt-16 relative'>
           <Slider />
         </section>
+        <section className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*]:px-2.5 [&>*]:py-3.5 [&>*]:rounded [&>*]:font-light [&>*]:text-sm [&>*:last-child]:font-semibold'>
+          <input
+            type='search'
+            placeholder='Recipe search'
+            className='grid-in-[recipe]'
+          />
+          <select className='grid-in-[meal]'>
+            <option>Meal</option>
+          </select>
+          <select className='grid-in-[cuisine]'>
+            <option>Cuisine</option>
+          </select>
+          <select className='grid-in-[diet]'>
+            <option>Diet</option>
+          </select>
+          <select className='grid-in-[time]'>
+            <option>Time</option>
+          </select>
+          <button className='grid-in-[search] bg-lightblue text-darkblue'>Search</button>
+        </section>
+        <section className='p-4'>Search results</section>
       </main>
       <Footer />
     </>
