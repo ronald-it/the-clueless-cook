@@ -3,20 +3,103 @@ import Link from 'next/link';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ReactModal from 'react-modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CloseIcon from '../components/CloseIcon';
 import CustomImage from '../components/CustomImage/CustomImage';
 import ArrowRightIcon from '../components/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
 import RecipeCard from '../components/RecipeCard';
+import axios from 'axios';
 
 export default function Home() {
+  // Declare variables for URI, endpoint, API ID and API Key
+  const URI = 'https://api.edamam.com';
+  const endpoint = '/api/recipes/v2';
+  const API_ID = '44920bbe';
+  const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
+
+  // Initialize useState
+  const [carouselRecipeCards, setCarouselRecipeCards] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const recipeCards = Array.from({ length: 20 }, (_, i) => i);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
 
-  const recipeCards = Array.from({ length: 20 }, (_, i) => i);
+  useEffect(() => {
+    async function fetchCarouselRecipeCards() {
+      const recipeKeywords = [
+        'Pizza',
+        'Spaghetti',
+        'Burger',
+        'Hot Dog',
+        'Tacos',
+        'Enchiladas',
+        'Couscous',
+        'Shakshuka',
+        'Kebab',
+        'Ćevapi',
+        'Sarma',
+        'Biryani',
+        'Butter Chicken',
+        'Dumplings',
+        'Sweet and Sour Pork',
+        'Sushi',
+        'Ramen',
+        'Pho',
+        'Pad Thai',
+      ];
+
+      // Function to get random keywords that will be used for API requests related to the recipe cards carousel
+      const getRandomKeywords = (keywordsArray) => {
+        const randomKeywords = new Set();
+
+        while (randomKeywords.size < 3) {
+          const randomIndex = Math.floor(Math.random() * keywordsArray.length);
+          const randomKeyword = keywordsArray[randomIndex];
+
+          randomKeywords.add(randomKeyword);
+        }
+
+        return Array.from(randomKeywords);
+      };
+
+      const [keywordOne, keywordTwo, keywordThree] = getRandomKeywords(recipeKeywords);
+
+      const requiredApiParams = {
+        type: 'public',
+        app_id: API_ID,
+        app_key: API_KEY,
+      };
+
+      try {
+        const [responseOne, responseTwo, responseThree] = await Promise.all([
+          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordOne } }),
+          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordTwo } }),
+          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordThree } }),
+        ]);
+
+        const getRandomRecipe = (hits) => {
+          const randomIndex = Math.floor(Math.random() * hits.length);
+          return hits[randomIndex].recipe;
+        };
+
+        setCarouselRecipeCards([
+          getRandomRecipe(responseOne.data.hits),
+          getRandomRecipe(responseTwo.data.hits),
+          getRandomRecipe(responseThree.data.hits),
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (!carouselRecipeCards) {
+      fetchCarouselRecipeCards();
+    }
+  }, [carouselRecipeCards]);
+
+  useEffect(() => console.log(carouselRecipeCards), [carouselRecipeCards]);
 
   return (
     <>
