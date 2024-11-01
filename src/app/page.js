@@ -68,78 +68,78 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    async function fetchCarouselRecipeCards() {
-      const recipeKeywords = [
-        'Pizza',
-        'Spaghetti',
-        'Burger',
-        'Hot Dog',
-        'Tacos',
-        'Enchiladas',
-        'Couscous',
-        'Shakshuka',
-        'Kebab',
-        'Ćevapi',
-        'Sarma',
-        'Biryani',
-        'Butter Chicken',
-        'Dumplings',
-        'Sweet and Sour Pork',
-        'Sushi',
-        'Ramen',
-        'Pho',
-        'Pad Thai',
-      ];
+  // useEffect(() => {
+  //   async function fetchCarouselRecipeCards() {
+  //     const recipeKeywords = [
+  //       'Pizza',
+  //       'Spaghetti',
+  //       'Burger',
+  //       'Hot Dog',
+  //       'Tacos',
+  //       'Enchiladas',
+  //       'Couscous',
+  //       'Shakshuka',
+  //       'Kebab',
+  //       'Ćevapi',
+  //       'Sarma',
+  //       'Biryani',
+  //       'Butter Chicken',
+  //       'Dumplings',
+  //       'Sweet and Sour Pork',
+  //       'Sushi',
+  //       'Ramen',
+  //       'Pho',
+  //       'Pad Thai',
+  //     ];
 
-      // Function to get random keywords that will be used for API requests related to the recipe cards carousel
-      const getRandomKeywords = (keywordsArray) => {
-        const randomKeywords = new Set();
+  //     // Function to get random keywords that will be used for API requests related to the recipe cards carousel
+  //     const getRandomKeywords = (keywordsArray) => {
+  //       const randomKeywords = new Set();
 
-        while (randomKeywords.size < 3) {
-          const randomIndex = Math.floor(Math.random() * keywordsArray.length);
-          const randomKeyword = keywordsArray[randomIndex];
+  //       while (randomKeywords.size < 3) {
+  //         const randomIndex = Math.floor(Math.random() * keywordsArray.length);
+  //         const randomKeyword = keywordsArray[randomIndex];
 
-          randomKeywords.add(randomKeyword);
-        }
+  //         randomKeywords.add(randomKeyword);
+  //       }
 
-        return Array.from(randomKeywords);
-      };
+  //       return Array.from(randomKeywords);
+  //     };
 
-      const [keywordOne, keywordTwo, keywordThree] = getRandomKeywords(recipeKeywords);
+  //     const [keywordOne, keywordTwo, keywordThree] = getRandomKeywords(recipeKeywords);
 
-      const requiredApiParams = {
-        type: 'public',
-        app_id: API_ID,
-        app_key: API_KEY,
-      };
+  //     const requiredApiParams = {
+  //       type: 'public',
+  //       app_id: API_ID,
+  //       app_key: API_KEY,
+  //     };
 
-      try {
-        const [responseOne, responseTwo, responseThree] = await Promise.all([
-          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordOne } }),
-          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordTwo } }),
-          axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordThree } }),
-        ]);
+  //     try {
+  //       const [responseOne, responseTwo, responseThree] = await Promise.all([
+  //         axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordOne } }),
+  //         axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordTwo } }),
+  //         axios.get(`${URI}${endpoint}`, { params: { ...requiredApiParams, q: keywordThree } }),
+  //       ]);
 
-        const getRandomRecipe = (hits) => {
-          const randomIndex = Math.floor(Math.random() * hits.length);
-          return hits[randomIndex].recipe;
-        };
+  //       const getRandomRecipe = (hits) => {
+  //         const randomIndex = Math.floor(Math.random() * hits.length);
+  //         return hits[randomIndex].recipe;
+  //       };
 
-        setCarouselRecipeCards([
-          getRandomRecipe(responseOne.data.hits),
-          getRandomRecipe(responseTwo.data.hits),
-          getRandomRecipe(responseThree.data.hits),
-        ]);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  //       setCarouselRecipeCards([
+  //         getRandomRecipe(responseOne.data.hits),
+  //         getRandomRecipe(responseTwo.data.hits),
+  //         getRandomRecipe(responseThree.data.hits),
+  //       ]);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
 
-    if (!carouselRecipeCards) {
-      fetchCarouselRecipeCards();
-    }
-  }, [carouselRecipeCards]);
+  //   if (!carouselRecipeCards) {
+  //     fetchCarouselRecipeCards();
+  //   }
+  // }, [carouselRecipeCards]);
 
   useEffect(() => console.log(carouselRecipeCards), [carouselRecipeCards]);
 
@@ -156,10 +156,10 @@ export default function Home() {
         onRequestClose={toggleModal}
         shouldCloseOnOverlayClick={true}
         ariaHideApp={false}
-        className='h-full p-4'
+        className='h-full flex justify-center items-center p-6'
         style={{ overlay: { zIndex: 9999 } }}
       >
-        <div className='h-full w-full flex justify-center items-center bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light'>
+        <div className='relative h-full max-h-[30rem] w-full max-w-md flex justify-center items-center bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light'>
           <button className='absolute top-8 right-8 w-6' onClick={toggleModal}>
             <CloseIcon />
           </button>
@@ -194,7 +194,7 @@ export default function Home() {
             width={100}
             height={100}
           />
-          <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap'>
+          <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl px-8'>
             <h2>Delicious Recipes.</h2>
             <h2 className='font-light'>Daily Updated</h2>
             <a
@@ -209,13 +209,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className='-mt-16 relative'>
+        {/* <section className='-mt-16 relative'>
           <Slider carouselRecipes={carouselRecipeCards} />
-        </section>
+        </section> */}
 
-        <section id='recipe-search'>
+        <section id='recipe-search' className='bg-darkblue flex justify-center'>
           <form
-            className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold'
+            className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold w-full max-w-2xl'
             onSubmit={(e) => {
               e.preventDefault();
               console.log('pre fired');
@@ -325,8 +325,8 @@ export default function Home() {
           </form>
         </section>
 
-        <section className='flex justify-center p-6 border-2 border-black'>
-          <div className='grid grid-cols-1 gap-y-6'>
+        <section className='flex justify-center p-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-8 sm:gap-x-8 max-w-2xl'>
             {recipes &&
               recipes.map((recipe) => {
                 return (
