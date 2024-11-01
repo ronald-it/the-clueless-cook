@@ -3,7 +3,7 @@ import CustomImage from './CustomImage/CustomImage';
 
 export default function RecipeCard({ link, image, name, calories, ingredients, time }) {
   return (
-        <article className='rounded-md shadow-3xl border-2 border-black basis-[18rem] max-w-[24rem] swiper-slide'>
+        <article className='rounded-md shadow-3xl basis-[18rem] max-w-[24rem] swiper-slide'>
         <Link href={link}>
           <CustomImage
             src={image}
