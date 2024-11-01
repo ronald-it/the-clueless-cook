@@ -29,7 +29,14 @@ export default function Slider({ carouselRecipes }) {
       onSwiper={(swiper) => (swiperRef.current = swiper)}
       modules={[Navigation, Pagination]}
       spaceBetween={10}
-      slidesPerView={1.2}
+      breakpoints={{
+        0: {
+          slidesPerView: 1.2,
+        },
+        451: {
+          slidesPerView: 1.7,
+        },
+      }}
       centeredSlides={true}
       initialSlide={1}
       pagination={{

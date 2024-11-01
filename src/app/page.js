@@ -61,9 +61,8 @@ export default function Home() {
         },
       });
 
-      const recipesData = response.data.hits.map(hit => hit.recipe);
+      const recipesData = response.data.hits.map((hit) => hit.recipe);
       setRecipes(recipesData);
-      
     } catch (error) {
       console.log(error);
     }
@@ -198,12 +197,15 @@ export default function Home() {
           <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap'>
             <h2>Delicious Recipes.</h2>
             <h2 className='font-light'>Daily Updated</h2>
-            <button className='mt-2 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center'>
+            <a
+              href='#recipe-search'
+              className='mt-2 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center w-fit'
+            >
               <span className='mr-1 py-1.5'>Find Recipes</span>
               <span>
                 <ArrowRightIcon />
               </span>
-            </button>
+            </a>
           </div>
         </section>
 
@@ -211,17 +213,17 @@ export default function Home() {
           <Slider carouselRecipes={carouselRecipeCards} />
         </section>
 
-        <section>
+        <section id='recipe-search'>
           <form
             className='p-8 bg-darkblue grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold'
             onSubmit={(e) => {
               e.preventDefault();
-              console.log('pre fired')
+              console.log('pre fired');
               fetchSearchResults(formState);
-              console.log('post fired')
+              console.log('post fired');
             }}
           >
-            <label className='grid-in-[recipe]' htmlFor='recipe'>
+            <label className='grid-in-[recipe] relative' htmlFor='recipe'>
               <input
                 name='recipe'
                 id='recipe'
@@ -230,6 +232,9 @@ export default function Home() {
                 placeholder='Recipe search'
                 onChange={handleChange}
               />
+              <button type='submit' className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6'>
+                <CustomImage src='images/search.png' alt='Search icon' width={100} height={100} />
+              </button>
             </label>
             <label className='grid-in-[meal]' htmlFor='meal'>
               <select
@@ -308,8 +313,14 @@ export default function Home() {
                 <option value='61%2B'>More than 60 min.</option>
               </select>
             </label>
-            <button className='grid-in-[search] bg-lightblue text-darkblue rounded' type='submit'>
-              Search
+            <button
+              className='grid-in-[search] bg-lightblue text-darkblue rounded flex justify-center items-center'
+              type='submit'
+            >
+              <span className='mr-2'>Search</span>
+              <span>
+                <ArrowRightIcon />
+              </span>
             </button>
           </form>
         </section>
