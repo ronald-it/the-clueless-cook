@@ -61,7 +61,9 @@ export default function Home() {
         },
       });
 
-      setRecipes(response.data.hits.recipe);
+      const recipesData = response.data.hits.map(hit => hit.recipe);
+      setRecipes(recipesData);
+      
     } catch (error) {
       console.log(error);
     }
