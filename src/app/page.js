@@ -325,21 +325,23 @@ export default function Home() {
           </form>
         </section>
 
-        <section className='p-6 grid grid-cols-1 gap-y-6'>
-          {recipes &&
-            recipes.map((recipe) => {
-              return (
-                <RecipeCard
-                  key={recipe.uri.split('_')[1]}
-                  link={`/recipe/${recipe.uri.split('_')[1]}`}
-                  image={recipe.image}
-                  name={recipe.label}
-                  calories={recipe.calories}
-                  ingredients={recipe.ingredients.length}
-                  time={recipe.totalTime}
-                />
-              );
-            })}
+        <section className='flex justify-center p-6 border-2 border-black'>
+          <div className='grid grid-cols-1 gap-y-6'>
+            {recipes &&
+              recipes.map((recipe) => {
+                return (
+                  <RecipeCard
+                    key={recipe.uri.split('_')[1]}
+                    link={`/recipe/${recipe.uri.split('_')[1]}`}
+                    image={recipe.image}
+                    name={recipe.label}
+                    calories={recipe.calories}
+                    ingredients={recipe.ingredients.length}
+                    time={recipe.totalTime}
+                  />
+                );
+              })}
+          </div>
         </section>
       </main>
 
