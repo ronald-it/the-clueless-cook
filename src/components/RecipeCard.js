@@ -29,18 +29,18 @@ export default function RecipeCard({
           } from-gray-100 to-gray-200 rounded-b-md`}
         >
           <div className='w-[99%] truncate'>
-            <span className='font-semibold w-4'>{name}</span>
+            <span className='font-semibold w-4 lg:text-base'>{name}</span>
           </div>
           <div className='mt-2 flex justify-between'>
-            <div className='flex'>
+            <div className='flex items-center lg:[&>*]:text-sm'>
               <span className='mr-0.5 font-semibold'>{Math.round(calories)}</span>
               <span>Kcal</span>
               <span className='mx-1'>|</span>
               <span className='mr-0.5 font-semibold'>{ingredients}</span>
               <span>Ingredients</span>
             </div>
-            <div className='flex'>
-              <span className='w-4 mr-1'>
+            <div className='flex lg:[&>*]:text-sm'>
+              <span className='w-4 mr-1 flex'>
                 <CustomImage
                   src='/images/time.svg'
                   alt='Clock icon'

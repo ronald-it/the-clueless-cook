@@ -190,11 +190,11 @@ export default function Home() {
             priority={true}
           />
           <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl lg:max-w-7xl px-8'>
-            <h2>Delicious Recipes.</h2>
-            <h2 className='font-light'>Daily Updated</h2>
+            <h2 className='lg:text-5xl'>Delicious Recipes.</h2>
+            <h2 className='font-light lg:text-4xl'>Daily Updated.</h2>
             <a
               href='#recipe-search'
-              className='mt-2 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center w-fit'
+              className='mt-2 lg:mt-4 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center w-fit'
             >
               <span className='mr-1 py-1.5'>Find Recipes</span>
               <span>
@@ -246,7 +246,10 @@ export default function Home() {
                 placeholder='Recipe search'
                 onChange={handleChange}
               />
-              <button type='submit' className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6 lg:right-2'>
+              <button
+                type='submit'
+                className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6 lg:right-2'
+              >
                 <CustomImage src='images/search.png' alt='Search icon' width={100} height={100} />
               </button>
             </label>
@@ -339,8 +342,8 @@ export default function Home() {
           </form>
         </section>
 
-        <section className='flex justify-center'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8'>
+        <section className='flex justify-center '>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
             {recipes &&
               recipes.map((recipe) => {
                 return (
