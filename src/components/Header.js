@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import CustomImage from './CustomImage/CustomImage';
 import HamburgerIcon from './HamburgerIcon';
 import Link from 'next/link';
 

@@ -1,3 +1,4 @@
+import AppLayout from '../components/AppLayout';
 import '../styles/globals.css';
 import FontLoader from './FontLoader';
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children }) {
       <head>
         <FontLoader />
       </head>
-      <body>{children}</body>
+      <body className='min-h-screen'>
+        <AppLayout>{children}</AppLayout>
+      </body>
     </html>
   );
 }
