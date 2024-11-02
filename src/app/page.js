@@ -211,6 +211,22 @@ export default function Home() {
 
         <section className='-mt-16 relative'>
           <Slider carouselRecipes={carouselRecipeCards} />
+          <div className='hidden lg:flex lg:w-full lg:max-w-7xl border-2 border-black'>
+            {carouselRecipeCards &&
+              carouselRecipeCards.map((recipe) => {
+                return (
+                  <RecipeCard
+                    key={recipe.uri.split('_')[1]}
+                    link={`/recipe/${recipe.uri.split('_')[1]}`}
+                    image={recipe.image}
+                    name={recipe.label}
+                    calories={recipe.calories}
+                    ingredients={recipe.ingredients.length}
+                    time={recipe.totalTime}
+                  />
+                );
+              })}
+          </div>
         </section>
 
         <section id='recipe-search' className='bg-darkblue flex justify-center'>

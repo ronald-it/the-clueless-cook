@@ -49,6 +49,7 @@ export default function Slider({ carouselRecipes }) {
         bulletActiveClass: styles.bulletActive,
       }}
       loop={true}
+      className='lg:hidden'
     >
       {carouselRecipes &&
         carouselRecipes.map((recipe) => {

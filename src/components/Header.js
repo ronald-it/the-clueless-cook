@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CustomImage from './CustomImage/CustomImage';
+import HamburgerIcon from './HamburgerIcon';
 
 export default function Header({ toggleModal }) {
   return (
@@ -7,12 +8,7 @@ export default function Header({ toggleModal }) {
       <div className='flex px-8 justify-between items-center py-4 w-full max-w-2xl'>
         <h1 className='font-light text-darkblue'>The Clueless Cook</h1>
         <button className='w-8' onClick={toggleModal}>
-          <CustomImage
-            src='/images/Hamburger_icon.svg'
-            alt='Hamburger icon'
-            width={100}
-            height={100}
-          />
+          <HamburgerIcon/>
         </button>
       </div>
     </header>
