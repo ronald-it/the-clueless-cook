@@ -193,6 +193,7 @@ export default function Home() {
             className='w-full h-96 object-cover'
             width={100}
             height={100}
+            priority={true}
           />
           <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl px-8'>
             <h2>Delicious Recipes.</h2>
