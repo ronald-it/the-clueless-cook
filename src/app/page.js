@@ -62,7 +62,7 @@ export default function Home() {
       });
 
       const recipesData = response.data.hits.map((hit) => hit.recipe);
-      setRecipes(recipesData);
+      setRecipes(recipesData.slice(0, recipesData.length - 2));
     } catch (error) {
       console.log(error);
     }
@@ -140,12 +140,6 @@ export default function Home() {
       fetchCarouselRecipeCards();
     }
   }, [carouselRecipeCards]);
-
-  useEffect(() => console.log(carouselRecipeCards), [carouselRecipeCards]);
-
-  useEffect(() => console.log(recipes), [recipes]);
-
-  useEffect(() => console.log(formState), [formState]);
 
   return (
     <>
@@ -346,7 +340,7 @@ export default function Home() {
         </section>
 
         <section className='flex justify-center'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-y-8 sm:gap-x-8 max-w-2xl p-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8'>
             {recipes &&
               recipes.map((recipe) => {
                 return (
