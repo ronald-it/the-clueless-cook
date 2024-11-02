@@ -10,11 +10,11 @@ export default function AppLayout({ children }) {
     setIsModalOpen((prev) => !prev);
   };
   return (
-    <>
+    <div className='min-h-screen flex flex-col'>
       <Header toggleModal={toggleModal} />
       <NavigationModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
-      <main className='h-full'>{children}</main>
+      <main className='grow'>{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }

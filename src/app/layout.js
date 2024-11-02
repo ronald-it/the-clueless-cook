@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <head>
         <FontLoader />
       </head>
-      <body className='min-h-screen'>
+      <body>
         <AppLayout>{children}</AppLayout>
       </body>
     </html>
