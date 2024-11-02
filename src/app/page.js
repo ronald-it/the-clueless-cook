@@ -195,7 +195,7 @@ export default function Home() {
             height={100}
             priority={true}
           />
-          <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl px-8'>
+          <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl lg:max-w-7xl px-8'>
             <h2>Delicious Recipes.</h2>
             <h2 className='font-light'>Daily Updated</h2>
             <a
@@ -210,11 +210,11 @@ export default function Home() {
           </div>
         </section>
 
-        <section className='-mt-16 relative'>
+        <section className='-mt-16 relative lg:flex lg:justify-center lg:items-center'>
           <Slider carouselRecipes={carouselRecipeCards} />
-          <div className='hidden lg:flex lg:w-full lg:max-w-7xl border-2 border-black'>
+          <div className='hidden lg:flex lg:justify-center lg:items-center lg:w-full lg:max-w-7xl lg:mb-8 lg:px-8'>
             {carouselRecipeCards &&
-              carouselRecipeCards.map((recipe) => {
+              carouselRecipeCards.map((recipe, index) => {
                 return (
                   <RecipeCard
                     key={recipe.uri.split('_')[1]}
@@ -224,6 +224,9 @@ export default function Home() {
                     calories={recipe.calories}
                     ingredients={recipe.ingredients.length}
                     time={recipe.totalTime}
+                    gradientRight={index == 0}
+                    gradientLeft={index == 2}
+                    index={index}
                   />
                 );
               })}
