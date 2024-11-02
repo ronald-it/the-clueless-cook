@@ -1,0 +1,19 @@
+.customOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+  z-index: 9999;
+}
+
+.customOverlayAfterOpen {
+  opacity: 1;
+}
+
+.customOverlayBeforeClose {
+  opacity: 0;
+}

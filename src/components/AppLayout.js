@@ -1,6 +1,6 @@
 'use client';
 import Header from './Header';
-import NavigationModal from './NavigationModal';
+import NavigationModal from './NavigationModal/NavigationModal';
 import Footer from './Footer';
 import { useState } from 'react';
 
