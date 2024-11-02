@@ -14,7 +14,7 @@ export default function RecipeCard({
 }) {
   console.log(index)
   return (
-    <article className={`rounded-md shadow-3xl basis-[18rem] grow max-w-[24rem] lg:max-w-[28rem] swiper-slide ${index == 1 && '-mx-2 z-[9998]'}`}>
+    <article className={`rounded-md shadow-3xl basis-[18rem] grow max-w-[24rem] lg:max-w-[28rem] swiper-slide ${index == 1 && '-mx-2 z-[9998]'} bg-white`}>
       <Link href={link}>
         <CustomImage
           src={image}
