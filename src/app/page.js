@@ -235,7 +235,7 @@ export default function Home() {
 
         <section id='recipe-search' className='bg-darkblue flex justify-center'>
           <form
-            className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold w-full max-w-2xl'
+            className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full'
             onSubmit={(e) => {
               e.preventDefault();
               console.log('pre fired');
@@ -247,12 +247,12 @@ export default function Home() {
               <input
                 name='recipe'
                 id='recipe'
-                className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+                className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-sm lg:h-full'
                 type='search'
                 placeholder='Recipe search'
                 onChange={handleChange}
               />
-              <button type='submit' className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6'>
+              <button type='submit' className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6 lg:right-2'>
                 <CustomImage src='images/search.png' alt='Search icon' width={100} height={100} />
               </button>
             </label>
