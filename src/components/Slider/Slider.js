@@ -35,6 +35,10 @@ export default function Slider({ carouselRecipes }) {
         },
         451: {
           slidesPerView: 1.7,
+        }, 640: {
+          slidesPerView: 2.2,
+        }, 768: {
+          slidesPerView: 2.7,
         },
       }}
       centeredSlides={true}
