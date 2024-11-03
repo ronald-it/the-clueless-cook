@@ -6,13 +6,13 @@ import Slider from '../components/Slider/Slider';
 import RecipeCard from '../components/RecipeCard';
 import axios from 'axios';
 
-export default function Home() {
-  // Declare variables for URI, endpoint, API ID and API Key
-  const URI = 'https://api.edamam.com';
-  const endpoint = '/api/recipes/v2';
-  const API_ID = '44920bbe';
-  const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
+// Declare variables for URI, endpoint, API ID and API Key
+const URI = 'https://api.edamam.com';
+const endpoint = '/api/recipes/v2';
+const API_ID = '44920bbe';
+const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 
+export default function Home() {
   // Initialize useState
   const [formState, setFormState] = useState({
     recipe: '',
@@ -23,10 +23,6 @@ export default function Home() {
   });
   const [carouselRecipeCards, setCarouselRecipeCards] = useState();
   const [recipes, setRecipes] = useState();
-
-  const toggleModal = () => {
-    setIsModalOpen((prev) => !prev);
-  };
 
   const handleChange = (e) => {
     setFormState({

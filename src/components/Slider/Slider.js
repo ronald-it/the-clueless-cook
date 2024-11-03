@@ -56,7 +56,7 @@ export default function Slider({ carouselRecipes }) {
           return (
             <SwiperSlide key={recipe.uri.split('_')[1]}>
               <RecipeCard
-                link={`/recipe/${recipe.uri.split('_')[1]}`}
+                link={`/recipe?id=${recipe.uri.split('_')[1]}`}
                 image={recipe.image}
                 name={recipe.label}
                 calories={recipe.calories}
