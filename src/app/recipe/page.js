@@ -1,10 +1,9 @@
 'use client';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export const dynamic = 'force-dynamic';
-
-export default function RecipePage() {
+function RecipeInfo() {
   const searchParams = useSearchParams();
   const [id, setId] = useState(null);
 
@@ -15,5 +14,13 @@ export default function RecipePage() {
     }
   }, [searchParams]);
 
-  return <div>{id ? id : 'Loading...'}</div>;
+  return <div>{id}</div>;
+}
+
+export default function Recipe() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RecipeInfo />
+    </Suspense>
+  );
 }
