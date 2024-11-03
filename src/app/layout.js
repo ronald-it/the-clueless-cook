@@ -1,9 +1,10 @@
-import "../styles/globals.css";
+import AppLayout from '../components/AppLayout';
+import '../styles/globals.css';
 import FontLoader from './FontLoader';
 
 export const metadata = {
-  title: "Browser tab title",
-  description: "Browser tab description",
+  title: 'The Clueless Cook',
+  description: 'A web app for searching and exploring recipes',
   icons: {
     icon: '/images/favicon-32x32.png',
   },
@@ -11,12 +12,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <FontLoader/>
+        <FontLoader />
       </head>
       <body>
-        {children}
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );
