@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import CustomImage from './CustomImage/CustomImage';
+import Image from 'next/image';
 
 export default function RecipeCard({
   link,
@@ -16,7 +17,7 @@ export default function RecipeCard({
   return (
     <article className={`rounded-md shadow-3xl basis-[18rem] grow max-w-[24rem] lg:max-w-[28rem] swiper-slide ${index == 1 && '-mx-2 z-[9998]'} bg-white`}>
       <Link href={link}>
-        <CustomImage
+        <Image
           src={image}
           alt={`${name} recipe image`}
           className={`w-full h-40 lg:h-52 ${(index == 0 || index == 2) && 'lg:h-[10rem]'} object-cover rounded-t-md`}
