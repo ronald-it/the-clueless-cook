@@ -39,8 +39,8 @@ function RecipeContent({ id }) {
   if (!recipe) return <div>Loading recipe...</div>;
 
   return (
-    <article className='flex flex-col p-6 gap-6 text-darkblue'>
-      <section>
+    <article className='flex flex-col p-6 gap-6 text-darkblue sm:grid sm:grid-areas-[recipe_recipe,lorem_lorem,image_nutrients,ingredients_labels] sm:grid-cols-2'>
+      <section className='flex flex-wrap gap-x-6 sm:grid-in-[recipe]'>
         <h2 className='text-lg font-bold'>{recipe.label}</h2>
         <div className='flex items-center'>
           <CustomImage
@@ -57,7 +57,7 @@ function RecipeContent({ id }) {
         </div>
       </section>
 
-      <section className='font-normal text-black'>
+      <section className='font-normal text-black sm:grid-in-[lorem]'>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ultrices venenatis
           mauris in ultrices. Sed nec tristique leo. Praesent luctus elit et pulvinar sagittis.
@@ -65,7 +65,7 @@ function RecipeContent({ id }) {
           aliquet sapien congue at. Morbi tempus massa purus, et ultricies eros egestas at.
           Phasellus a pharetra nibh, ac imperdiet arcu. Suspendisse sollicitudin laoreet lectus.
         </p>
-        <p className='hidden sm:block'>
+        <p className='hidden sm:block sm:mt-4'>
           Vivamus ullamcorper ultrices tortor, ut maximus velit facilisis ac. Nullam ac est diam.
           Nullam eget sapien eu est volutpat auctor ac posuere neque. Pellentesque condimentum
           turpis erat, sed elementum diam sodales vitae. Nullam semper quis nulla eget ullamcorper.
@@ -74,7 +74,7 @@ function RecipeContent({ id }) {
         </p>
       </section>
 
-      <section>
+      <section className='sm:grid-in-[image]'>
         <Image
           src={recipe.image}
           alt={`${recipe.label} image`}
@@ -84,7 +84,7 @@ function RecipeContent({ id }) {
         />
       </section>
 
-      <section>
+      <section className='grid-in-[ingredients]'>
         <h3>Ingredients</h3>
         <ul className='list-inside'>
           {recipe.ingredientLines.map((ingredient, index) => (
@@ -98,9 +98,9 @@ function RecipeContent({ id }) {
         </ul>
       </section>
 
-      <section>
+      <section className='sm:grid-in-[nutrients] flex flex-col'>
         <h3>Nutrients</h3>
-        <ul className='list-inside'>
+        <ul className='list-inside sm:h-full sm:flex sm:flex-col sm:justify-between'>
           <li
             className={`before:content-['•'] before:mr-2 before:text-darkblue before:text-3xl flex items-center`}
           >
@@ -152,7 +152,7 @@ function RecipeContent({ id }) {
         </ul>
       </section>
 
-      <section>
+      <section className='sm:grid-in-[labels]'>
         <h3 className='mb-2'>Health labels</h3>
         <ul className='flex flex-wrap gap-2'>
           {recipe.healthLabels.map((healthLabel, index) => (
