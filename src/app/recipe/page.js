@@ -10,11 +10,21 @@ const URI = 'https://api.edamam.com';
 const API_ID = '44920bbe';
 const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 
-function RecipeContent({ id }) {
-  // Initialize useState for recipe data
+function RecipeContent() {
+  // Declare searchParams to be able to extract the id from the URL
+  const searchParams = useSearchParams();
+  // Declare useStates for the recipe ID and recipe data
+  const [id, setId] = useState(null);
   const [recipe, setRecipe] = useState(null);
 
-  // Fetch the recipe data using the provided ID
+  // Fill id state as soon as searchParams is filled
+  useEffect(() => {
+    if (searchParams) {
+      const recipeId = searchParams.get('id');
+      setId(recipeId);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -172,21 +182,9 @@ function RecipeContent({ id }) {
 }
 
 export default function RecipePage() {
-  const searchParams = useSearchParams();
-  const [id, setId] = useState(null);
-
-  useEffect(() => {
-    if (searchParams) {
-      const recipeId = searchParams.get('id');
-      setId(recipeId);
-    }
-  }, [searchParams]);
-
-  if (!id) return <div>Loading...</div>;
-
   return (
     <Suspense fallback={<div>Loading recipe details...</div>}>
-      <RecipeContent id={id} />
+      <RecipeContent />
     </Suspense>
   );
 }
