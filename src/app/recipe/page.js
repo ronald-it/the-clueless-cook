@@ -40,18 +40,18 @@ function RecipeContent({ id }) {
 
   return (
     <div className='flex justify-center'>
-      <article className='flex flex-col p-6 gap-6 text-darkblue sm:grid sm:grid-areas-[recipe_recipe,lorem_lorem,image_nutrients,ingredients_labels] sm:grid-cols-2 lg:grid-areas-[recipe_recipe,lorem_image,ingredients_nutrients,labels_.] lg:max-w-7xl'>
+      <article className='flex flex-col p-8 gap-6 text-darkblue sm:grid sm:grid-areas-[recipe_recipe,lorem_lorem,image_nutrients,ingredients_labels] sm:grid-cols-2 lg:grid-areas-[recipe_recipe,lorem_image,ingredients_nutrients,labels_.] max-w-2xl lg:max-w-7xl'>
         <section className='flex flex-wrap gap-x-6 sm:grid-in-[recipe]'>
-          <h2 className='text-lg font-bold'>{recipe.label}</h2>
+          <h2 className='text-lg sm:text-2xl font-bold'>{recipe.label}</h2>
           <div className='flex items-center'>
             <CustomImage
               src='images/time.svg'
               alt='Clock icon'
-              className='w-4 h-4 mr-1'
+              className='w-4 h-4 sm:w-6 sm:h-6 mr-1'
               width={100}
               height={100}
             />
-            <h3 className='text-base'>
+            <h3 className='text-base sm:text-xl'>
               <span className='font-bold mr-1'>{recipe.totalTime}</span>
               <span className='font-normal'>min.</span>
             </h3>
@@ -81,7 +81,7 @@ function RecipeContent({ id }) {
             alt={`${recipe.label} image`}
             width={100}
             height={100}
-            className='w-full lg:max-w-xs'
+            className='w-full max-w-sm lg:max-w-80 lg:max-h-80 rounded'
           />
         </section>
 
@@ -100,8 +100,8 @@ function RecipeContent({ id }) {
         </section>
 
         <section className='sm:grid-in-[nutrients] flex flex-col lg:items-end'>
-          <h3 className='lg:w-full lg:max-w-xs'>Nutrients</h3>
-          <ul className='list-inside sm:h-full sm:flex sm:flex-col sm:justify-between lg:h-fit lg:w-full lg:max-w-xs'>
+          <h3 className='lg:w-full lg:max-w-80'>Nutrients</h3>
+          <ul className='list-inside sm:h-full sm:flex sm:flex-col sm:justify-between lg:h-fit lg:w-full lg:max-w-80'>
             <li
               className={`before:content-['•'] before:mr-2 before:text-darkblue before:text-3xl flex items-center`}
             >
