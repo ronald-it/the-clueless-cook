@@ -2,7 +2,7 @@ import CustomImage from '../../components/CustomImage/CustomImage';
 
 export default function Calculator() {
   return (
-    <div className='p-8 flex flex-col gap-y-8 border-2 border-black'>
+    <div className='p-8 flex flex-col gap-y-8'>
       <h2 className='text-2xl text-darkblue font-bold'>Calorie Calculator</h2>
 
       <section>
@@ -30,19 +30,31 @@ export default function Calculator() {
       </section>
 
       <section>
-        <table className='w-full'>
+        <table className='w-full text-xs'>
           <thead>
-            <tr className='[&>*]:border-2'>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Label</th>
+            <tr>
+              <th>
+                <div className='flex'>Product</div>
+              </th>
+              <th>
+                <div className='flex'>Quantity</div>
+              </th>
+              <th>
+                <div className='flex'>Label</div>
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr className='[&>*]:border-2'>
-              <td>Mars</td>
-              <td>60</td>
-              <td>Gram</td>
+            <tr>
+              <td>
+                <div className='mt-2'>Mars</div>
+              </td>
+              <td>
+                <div className='mt-2'>60</div>
+              </td>
+              <td>
+                <div className='mt-2'>Gram</div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -63,33 +75,65 @@ export default function Calculator() {
       </section>
 
       <section>
-        <table className='w-full border-2'>
+        <table className='w-full text-xs'>
           <thead>
-            <tr className='[&>*]:border-2'>
-              <th>Product</th>
-              <th>Calories</th>
-              <th>Fat</th>
-              <th>Carbs</th>
+            <tr>
+              <th>
+                <div className='flex'>Product</div>
+              </th>
+              <th>
+                <div className='flex'>Calories</div>
+              </th>
+              <th>
+                <div className='flex'>Fat</div>
+              </th>
+              <th>
+                <div className='flex'>Carbs</div>
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr className='[&>*]:border-2'>
-              <td>Milk</td>
-              <td>149 kcal</td>
-              <td>8 g</td>
-              <td>12 g</td>
+            <tr>
+              <td>
+                <div className='mt-2'>Milk</div>
+              </td>
+              <td>
+                <div className='mt-2'>149 kcal</div>
+              </td>
+              <td>
+                <div className='mt-2'>8 g</div>
+              </td>
+              <td>
+                <div className='mt-2'>12 g</div>
+              </td>
             </tr>
-            <tr className='[&>*]:border-2'>
-              <td>Mars</td>
-              <td>234 kcal</td>
-              <td>12 g</td>
-              <td>31 g</td>
+            <tr>
+              <td>
+                <div className='mt-2'>Mars</div>
+              </td>
+              <td>
+                <div className='mt-2'>234 kcal</div>
+              </td>
+              <td>
+                <div className='mt-2'>12 g</div>
+              </td>
+              <td>
+                <div className='mt-2'>31 g</div>
+              </td>
             </tr>
-            <tr className='[&>*]:border-2'>
-              <td>Total</td>
-              <td>383 kcal</td>
-              <td>20 g</td>
-              <td>43 g</td>
+            <tr>
+              <td>
+                <div className='mt-2'>Total</div>
+              </td>
+              <td>
+                <div className='mt-2'>383 kcal</div>
+              </td>
+              <td>
+                <div className='mt-2'>20 g</div>
+              </td>
+              <td>
+                <div className='mt-2'>43 g</div>
+              </td>
             </tr>
           </tbody>
         </table>
