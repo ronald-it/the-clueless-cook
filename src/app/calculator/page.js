@@ -11,7 +11,9 @@ const API_KEY = '270cc5a42e9022d3b8f92f30feed3e6e';
 
 export default function Calculator() {
   const [productInput, setProductInput] = useState();
-  const [products, setProducts] = useState([]);
+  const [servingSize, setServingSize] = useState();
+  const [searchResults, setSearchResults] = useState([]);
+  const [addedProducts, setAddedProducts] = useState([]);
 
   const fetchProduct = async (input) => {
     try {
@@ -23,15 +25,27 @@ export default function Calculator() {
           ingr: input,
         },
       });
-      setProducts([...products, response.data.parsed[0].food]);
+      setSearchResults([...searchResults, response.data.parsed[0].food]);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => console.log(products), [products]);
+  const handleCalculation = (e) => {
+    e.preventDefault();
 
-  useEffect(() => console.log(productInput), [productInput]);
+    const productsWithServingSize = searchResults.map((product) => ({
+      ...product,
+      servingSize: parseInt(servingSize),
+    }));
+
+    setAddedProducts((prevAddedProducts) => [...prevAddedProducts, ...productsWithServingSize]);
+
+    setSearchResults([]);
+  };
+
+  useEffect(() => console.log(searchResults, searchResults?.length), [searchResults]);
+  useEffect(() => console.log(addedProducts, addedProducts?.length), [addedProducts]);
 
   return (
     <div className='p-8 flex flex-col gap-y-8'>
@@ -71,7 +85,7 @@ export default function Calculator() {
         </form>
       </section>
 
-      {products.length > 0 && (
+      {searchResults?.length > 0 && (
         <section>
           <table className='w-full text-xs'>
             <thead>
@@ -88,7 +102,7 @@ export default function Calculator() {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => {
+              {searchResults.map((product) => {
                 return (
                   <tr key={product.foodId}>
                     <td>
@@ -109,86 +123,77 @@ export default function Calculator() {
       )}
 
       <section>
-        <form className='flex justify-between text-xs gap-x-2 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'>
+        <form
+          className='flex justify-between text-xs gap-x-2 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
+          onSubmit={handleCalculation}
+        >
           <label className='flex items-center'>Amount</label>
           <span>
             <input
               type='number'
-              className='w-full h-full text-xs border-[0.1rem] border-black rounded'
+              className='w-full h-full text-xs border-[0.1rem] border-black rounded p-2'
+              onChange={(e) => setServingSize(e.target.value)}
             />
           </span>
           <span>Serving(s)</span>
-          <button className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold text-xs rounded whitespace-nowrap px-2'>
+          <button
+            className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold text-xs rounded whitespace-nowrap px-2'
+            type='submit'
+          >
             <span className='mr-2'>+</span>
             <span>Add</span>
           </button>
         </form>
       </section>
 
-      <section>
-        <table className='w-full text-xs'>
-          <thead>
-            <tr>
-              <th>
-                <div className='flex'>Product</div>
-              </th>
-              <th>
-                <div className='flex'>Calories</div>
-              </th>
-              <th>
-                <div className='flex'>Fat</div>
-              </th>
-              <th>
-                <div className='flex'>Carbs</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div className='mt-2'>Milk</div>
-              </td>
-              <td>
-                <div className='mt-2'>149 kcal</div>
-              </td>
-              <td>
-                <div className='mt-2'>8 g</div>
-              </td>
-              <td>
-                <div className='mt-2'>12 g</div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='mt-2'>Mars</div>
-              </td>
-              <td>
-                <div className='mt-2'>234 kcal</div>
-              </td>
-              <td>
-                <div className='mt-2'>12 g</div>
-              </td>
-              <td>
-                <div className='mt-2'>31 g</div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className='mt-2'>Total</div>
-              </td>
-              <td>
-                <div className='mt-2'>383 kcal</div>
-              </td>
-              <td>
-                <div className='mt-2'>20 g</div>
-              </td>
-              <td>
-                <div className='mt-2'>43 g</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      {addedProducts?.length > 0 && (
+        <section>
+          <table className='w-full text-xs'>
+            <thead>
+              <tr>
+                <th>
+                  <div className='flex'>Product</div>
+                </th>
+                <th>
+                  <div className='flex'>Calories</div>
+                </th>
+                <th>
+                  <div className='flex'>Fat</div>
+                </th>
+                <th>
+                  <div className='flex'>Carbs</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {addedProducts.map((product) => {
+                return (
+                  <tr key={product.foodId}>
+                    <td>
+                      <div className='mt-2'>{product.label}</div>
+                    </td>
+                    <td>
+                      <div className='mt-2'>
+                        {Math.round(product.nutrients.ENERC_KCAL * product.servingSize)} kcal
+                      </div>
+                    </td>
+                    <td>
+                      <div className='mt-2'>
+                        {Math.round(product.nutrients.FAT * product.servingSize)} g
+                      </div>
+                    </td>
+                    <td>
+                      <div className='mt-2'>
+                        {Math.round(product.nutrients.CHOCDF * product.servingSize)} g
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+      )}
     </div>
   );
 }
