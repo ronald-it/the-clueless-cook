@@ -15,6 +15,7 @@ export default function Calculator() {
   const [servingSize, setServingSize] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
+  const [totalMacros, setTotalMacros] = useState({ calories: 0, fat: 0, carbs: 0 });
 
   const fetchProduct = async (input) => {
     try {
@@ -44,6 +45,26 @@ export default function Calculator() {
 
     setSearchResults([]);
   };
+
+  useEffect(() => {
+    const totalCalories = addedProducts
+      .map((product) => Math.round(product.nutrients.ENERC_KCAL * product.servingSize))
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+    const totalFat = addedProducts
+      .map((product) => Math.round(product.nutrients.FAT * product.servingSize))
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+    const totalCarbs = addedProducts
+      .map((product) => Math.round(product.nutrients.CHOCDF * product.servingSize))
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+
+    setTotalMacros({calories: totalCalories, fat: totalFat, carbs: totalCarbs});
+  }, [addedProducts]);
 
   useEffect(() => console.log(searchResults, searchResults?.length), [searchResults]);
   useEffect(() => console.log(addedProducts, addedProducts?.length), [addedProducts]);
@@ -170,30 +191,46 @@ export default function Calculator() {
                 </tr>
               </thead>
               <tbody>
-                {addedProducts.map((product) => {
+                {addedProducts.map((product, index) => {
                   return (
                     <tr key={product.foodId}>
                       <td>
-                        <div className='mt-2'>{product.label}</div>
+                        <div className={`${index == addedProducts.length - 1 ? 'my-2' : 'mt-2'}`}>
+                          {product.label}
+                        </div>
                       </td>
                       <td>
-                        <div className='mt-2'>
+                        <div className={`${index == addedProducts.length - 1 ? 'my-2' : 'mt-2'}`}>
                           {Math.round(product.nutrients.ENERC_KCAL * product.servingSize)} kcal
                         </div>
                       </td>
                       <td>
-                        <div className='mt-2'>
+                        <div className={`${index == addedProducts.length - 1 ? 'my-2' : 'mt-2'}`}>
                           {Math.round(product.nutrients.FAT * product.servingSize)} g
                         </div>
                       </td>
                       <td>
-                        <div className='mt-2'>
+                        <div className={`${index == addedProducts.length - 1 ? 'my-2' : 'mt-2'}`}>
                           {Math.round(product.nutrients.CHOCDF * product.servingSize)} g
                         </div>
                       </td>
                     </tr>
                   );
                 })}
+                <tr className='border-t-[0.1rem] border-black'>
+                  <td>
+                    <div className='mt-2'>Total</div>
+                  </td>
+                  <td>
+                    <div className='mt-2'>{totalMacros.calories} kcal</div>
+                  </td>
+                  <td>
+                    <div className='mt-2'>{totalMacros.fat} g</div>
+                  </td>
+                  <td>
+                    <div className='mt-2'>{totalMacros.carbs} g</div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </section>
