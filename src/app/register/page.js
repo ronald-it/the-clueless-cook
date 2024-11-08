@@ -1,10 +1,12 @@
 'use client';
+import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Register() {
   const [registration, setRegistration] = useState({ email: '', username: '', password: '' });
   const [submissionMessage, setSubmissionMessage] = useState('');
+  const [error, toggleError] = useState(false);
 
   const handleChange = (event) => {
     const changedFieldName = event.target.name;
@@ -32,8 +34,10 @@ export default function Register() {
           role: ['user'],
         },
       );
+      toggleError(false);
       setSubmissionMessage(response.data.message);
     } catch (error) {
+      toggleError(true);
       setSubmissionMessage(error.response.data.message);
     }
   };
@@ -52,7 +56,7 @@ export default function Register() {
             <input
               name='email'
               type='email'
-              className='rounded-md py-2'
+              className='rounded-md py-2 text-black'
               onChange={handleChange}
               value={registration.email}
             />
@@ -62,7 +66,7 @@ export default function Register() {
             <input
               name='username'
               type='text'
-              className='rounded-md py-2'
+              className='rounded-md py-2 text-black'
               onChange={handleChange}
               value={registration.username}
             />
@@ -72,7 +76,7 @@ export default function Register() {
             <input
               name='password'
               type='password'
-              className='rounded-md py-2'
+              className='rounded-md py-2 text-black'
               onChange={handleChange}
               value={registration.password}
             />
@@ -94,7 +98,11 @@ export default function Register() {
           </Link>
           .
         </span>
-        {submissionMessage && <span>{submissionMessage}</span>}
+        {submissionMessage && (
+          <span className={`${error ? 'text-red-500' : 'text-green-500'} font-semibold`}>
+            {submissionMessage}
+          </span>
+        )}
       </div>
     </div>
   );
