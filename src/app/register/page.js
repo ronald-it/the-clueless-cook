@@ -44,11 +44,11 @@ export default function Register() {
 
   return (
     <div className='flex justify-center py-6'>
-      <div className='px-8 flex flex-col gap-y-4 w-full sm:max-w-2xl lg:max-w-7xl text-xs'>
+      <div className='px-8 flex flex-col gap-y-4 sm:gap-y-6 w-full sm:max-w-2xl lg:max-w-7xl text-xs sm:text-sm lg:text-base'>
         <h2 className='text-darkblue'>Registration</h2>
         <span>You can register an account down below.</span>
         <form
-          className='bg-darkblue text-white p-6 flex flex-col gap-y-2 rounded-lg'
+          className='bg-darkblue text-white p-6 flex flex-col gap-y-2 sm:gap-y-4 lg:gap-y-6 rounded-lg max-w-sm'
           onSubmit={handleSubmit}
         >
           <div className='flex flex-col gap-y-1'>
@@ -56,7 +56,7 @@ export default function Register() {
             <input
               name='email'
               type='email'
-              className='rounded-md py-2 text-black'
+              className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
               value={registration.email}
             />
@@ -66,7 +66,7 @@ export default function Register() {
             <input
               name='username'
               type='text'
-              className='rounded-md py-2 text-black'
+              className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
               value={registration.username}
             />
@@ -76,7 +76,7 @@ export default function Register() {
             <input
               name='password'
               type='password'
-              className='rounded-md py-2 text-black'
+              className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
               value={registration.password}
             />
