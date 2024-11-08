@@ -48,152 +48,151 @@ export default function Calculator() {
   useEffect(() => console.log(addedProducts, addedProducts?.length), [addedProducts]);
 
   return (
-    <div className='p-8 flex flex-col gap-y-8'>
-      <h2 className='text-2xl text-darkblue font-bold'>Calorie Calculator</h2>
+    <div className='flex justify-center py-6'>
+      <div className='px-8 flex flex-col gap-y-8 w-full sm:max-w-2xl lg:max-w-7xl'>
 
-      <section>
-        <form
-          className='flex flex-col gap-y-2'
-          onSubmit={(e) => {
-            e.preventDefault();
-            fetchProduct(productInput);
-          }}
-        >
-          <label>
-            <div className='relative'>
+        <h2 className='text-2xl lg:text-3xl text-darkblue font-bold'>Calorie Calculator</h2>
+
+        <section>
+          <form
+            className='flex flex-col gap-y-2 sm:flex-row sm:gap-x-2 sm:max-w-md'
+            onSubmit={(e) => {
+              e.preventDefault();
+              fetchProduct(productInput);
+            }}
+          >
+            <label className='sm:w-full'>
+              <div className='relative'>
+                <input
+                  type='search'
+                  placeholder='Barcode / product'
+                  className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 lg:text-base lg:placeholder:text-base p-2'
+                  onChange={(e) => setProductInput(e.target.value)}
+                />
+                <button className='w-5 h-5 absolute top-0 translate-y-1/3 lg:translate-y-1/2 right-4' type='submit'>
+                  <CustomImage src='/images/search.png' alt='Clock icon' width={100} height={100} />
+                </button>
+              </div>
+            </label>
+            <button
+              className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full sm:w-40 text-xs lg:text-base py-2 rounded'
+              type='submit'
+            >
+              Search
+            </button>
+          </form>
+        </section>
+
+        {searchResults?.length > 0 && (
+          <section>
+            <table className='w-full text-xs lg:text-base sm:max-w-xs'>
+              <thead>
+                <tr>
+                  <th>
+                    <div className='flex'>Product</div>
+                  </th>
+                  <th>
+                    <div className='flex'>Quantity</div>
+                  </th>
+                  <th>
+                    <div className='flex'>Label</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchResults.map((product) => {
+                  return (
+                    <tr key={product.foodId}>
+                      <td>
+                        <div className='mt-2'>{product.label}</div>
+                      </td>
+                      <td>
+                        <div className='mt-2'>100</div>
+                      </td>
+                      <td>
+                        <div className='mt-2'>Gram</div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </section>
+        )}
+
+        <section>
+          <form
+            className='flex justify-between sm:justify-start text-xs lg:text-base gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
+            onSubmit={handleCalculation}
+          >
+            <label className='flex items-center'>Amount</label>
+            <span>
               <input
-                type='search'
-                placeholder='Barcode / product'
-                className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 p-2'
-                onChange={(e) => setProductInput(e.target.value)}
+                type='number'
+                className='w-full h-full border-[0.1rem] border-black rounded p-2'
+                onChange={(e) => setServingSize(e.target.value)}
               />
-              <CustomImage
-                src='/images/search.png'
-                alt='Clock icon'
-                width={100}
-                height={100}
-                className='w-5 h-5 absolute top-0 translate-y-1/3 right-4'
-              />
-            </div>
-          </label>
-          <button
-            className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full text-xs py-2 rounded'
-            type='submit'
-          >
-            Search
-          </button>
-        </form>
-      </section>
-
-      {searchResults?.length > 0 && (
-        <section>
-          <table className='w-full text-xs'>
-            <thead>
-              <tr>
-                <th>
-                  <div className='flex'>Product</div>
-                </th>
-                <th>
-                  <div className='flex'>Quantity</div>
-                </th>
-                <th>
-                  <div className='flex'>Label</div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchResults.map((product) => {
-                return (
-                  <tr key={product.foodId}>
-                    <td>
-                      <div className='mt-2'>{product.label}</div>
-                    </td>
-                    <td>
-                      <div className='mt-2'>100</div>
-                    </td>
-                    <td>
-                      <div className='mt-2'>Gram</div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+            </span>
+            <span>Serving(s)</span>
+            <button
+              className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold rounded whitespace-nowrap px-2'
+              type='submit'
+            >
+              <span className='mr-2'>+</span>
+              <span>Add</span>
+            </button>
+          </form>
         </section>
-      )}
 
-      <section>
-        <form
-          className='flex justify-between text-xs gap-x-2 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
-          onSubmit={handleCalculation}
-        >
-          <label className='flex items-center'>Amount</label>
-          <span>
-            <input
-              type='number'
-              className='w-full h-full text-xs border-[0.1rem] border-black rounded p-2'
-              onChange={(e) => setServingSize(e.target.value)}
-            />
-          </span>
-          <span>Serving(s)</span>
-          <button
-            className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold text-xs rounded whitespace-nowrap px-2'
-            type='submit'
-          >
-            <span className='mr-2'>+</span>
-            <span>Add</span>
-          </button>
-        </form>
-      </section>
-
-      {addedProducts?.length > 0 && (
-        <section>
-          <table className='w-full text-xs'>
-            <thead>
-              <tr>
-                <th>
-                  <div className='flex'>Product</div>
-                </th>
-                <th>
-                  <div className='flex'>Calories</div>
-                </th>
-                <th>
-                  <div className='flex'>Fat</div>
-                </th>
-                <th>
-                  <div className='flex'>Carbs</div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {addedProducts.map((product) => {
-                return (
-                  <tr key={product.foodId}>
-                    <td>
-                      <div className='mt-2'>{product.label}</div>
-                    </td>
-                    <td>
-                      <div className='mt-2'>
-                        {Math.round(product.nutrients.ENERC_KCAL * product.servingSize)} kcal
-                      </div>
-                    </td>
-                    <td>
-                      <div className='mt-2'>
-                        {Math.round(product.nutrients.FAT * product.servingSize)} g
-                      </div>
-                    </td>
-                    <td>
-                      <div className='mt-2'>
-                        {Math.round(product.nutrients.CHOCDF * product.servingSize)} g
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </section>
-      )}
+        {addedProducts?.length > 0 && (
+          <section>
+            <table className='w-full text-xs lg:text-base sm:max-w-2xl'>
+              <thead>
+                <tr>
+                  <th className='sm:w-1/4'>
+                    <div className='flex'>Product</div>
+                  </th>
+                  <th className='sm:w-1/4'>
+                    <div className='flex'>Calories</div>
+                  </th>
+                  <th className='sm:w-1/4'>
+                    <div className='flex'>Fat</div>
+                  </th>
+                  <th className='sm:w-1/4'>
+                    <div className='flex'>Carbs</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {addedProducts.map((product) => {
+                  return (
+                    <tr key={product.foodId}>
+                      <td>
+                        <div className='mt-2'>{product.label}</div>
+                      </td>
+                      <td>
+                        <div className='mt-2'>
+                          {Math.round(product.nutrients.ENERC_KCAL * product.servingSize)} kcal
+                        </div>
+                      </td>
+                      <td>
+                        <div className='mt-2'>
+                          {Math.round(product.nutrients.FAT * product.servingSize)} g
+                        </div>
+                      </td>
+                      <td>
+                        <div className='mt-2'>
+                          {Math.round(product.nutrients.CHOCDF * product.servingSize)} g
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
