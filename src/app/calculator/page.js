@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import CustomImage from '../../components/CustomImage/CustomImage';
 import axios from 'axios';
+import ArrowRightIcon from '../../components/ArrowRightIcon';
 
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
@@ -50,7 +51,6 @@ export default function Calculator() {
   return (
     <div className='flex justify-center py-6'>
       <div className='px-8 flex flex-col gap-y-8 w-full sm:max-w-2xl lg:max-w-7xl'>
-
         <h2 className='text-2xl lg:text-3xl text-darkblue font-bold'>Calorie Calculator</h2>
 
         <section>
@@ -69,16 +69,22 @@ export default function Calculator() {
                   className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 lg:text-base lg:placeholder:text-base p-2'
                   onChange={(e) => setProductInput(e.target.value)}
                 />
-                <button className='w-5 h-5 absolute top-0 translate-y-1/3 lg:translate-y-1/2 right-4' type='submit'>
+                <button
+                  className='w-5 h-5 absolute top-0 translate-y-1/3 lg:translate-y-1/2 right-4'
+                  type='submit'
+                >
                   <CustomImage src='/images/search.png' alt='Clock icon' width={100} height={100} />
                 </button>
               </div>
             </label>
             <button
-              className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full sm:w-40 text-xs lg:text-base py-2 rounded'
+              className='relative bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full sm:w-40 text-xs lg:text-base py-2 rounded flex justify-center items-center'
               type='submit'
             >
-              Search
+              <span className='mr-2'>Search</span>
+              <span>
+                <ArrowRightIcon />
+              </span>
             </button>
           </form>
         </section>
@@ -135,10 +141,10 @@ export default function Calculator() {
             </span>
             <span>Serving(s)</span>
             <button
-              className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold rounded whitespace-nowrap px-2'
+              className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold rounded whitespace-nowrap px-2 sm:px-4'
               type='submit'
             >
-              <span className='mr-2'>+</span>
+              <span className='mr-2 font-light text-xl'>+</span>
               <span>Add</span>
             </button>
           </form>
