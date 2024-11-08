@@ -2,8 +2,11 @@ import ReactModal from 'react-modal';
 import CloseIcon from '../CloseIcon';
 import Link from 'next/link';
 import styles from './NavigationModal.module.scss';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function NavigationModal({ isModalOpen, toggleModal }) {
+  const { authorization, userLogout } = useContext(AuthContext);
   return (
     <ReactModal
       isOpen={isModalOpen}
@@ -31,17 +34,28 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
         <button onClick={toggleModal}>
           <Link href='/calculator'>Calculator</Link>
         </button>
-        <button onClick={toggleModal}>
-          <Link href='/login'>Login</Link>
-        </button>
-        <button onClick={toggleModal}>
-          <Link href='/'>Logout</Link>
-        </button>
-        <button onClick={toggleModal}>
-          <span className='w-full flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-1'>
-            <Link href='/register'>Register</Link>
-          </span>
-        </button>
+        {!authorization && (
+          <button onClick={toggleModal}>
+            <Link href='/login'>Login</Link>
+          </button>
+        )}
+        {authorization && (
+          <button
+            onClick={() => {
+              toggleModal();
+              userLogout();
+            }}
+          >
+            <Link href='/'>Logout</Link>
+          </button>
+        )}
+        {!authorization && (
+          <button onClick={toggleModal}>
+            <span className='w-full flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-1'>
+              <Link href='/register'>Register</Link>
+            </span>
+          </button>
+        )}
       </div>
     </ReactModal>
   );

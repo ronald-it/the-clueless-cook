@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CustomImage from '../components/CustomImage/CustomImage';
 import ArrowRightIcon from '../components/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
 import RecipeCard from '../components/RecipeCard';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
@@ -13,6 +14,7 @@ const API_ID = '44920bbe';
 const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 
 export default function Home() {
+  const { authorization } = useContext(AuthContext);
   // Initialize useState
   const [formState, setFormState] = useState({
     recipe: '',
@@ -180,7 +182,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id='recipe-search' className='bg-darkblue flex justify-center'>
+      <section id='recipe-search' className='bg-darkblue flex justify-center relative'>
+        {!authorization && (
+          <div className='absolute top-1/2 -translate-y-1/2 z-[9998] w-full h-full text-lg sm:text-xl text-darkblue font-bold bg-white/60 flex justify-center items-center shadow-3xl'>
+            <span className='p-8'>Please log in to access the recipe search.</span>
+          </div>
+        )}
         <form
           className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full'
           onSubmit={(e) => {
@@ -194,14 +201,16 @@ export default function Home() {
             <input
               name='recipe'
               id='recipe'
-              className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-sm lg:h-full'
+              className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-sm lg:h-full disabled:bg-white disabled:opacity-50'
               type='search'
               placeholder='Recipe search'
               onChange={handleChange}
+              disabled={!authorization}
             />
             <button
               type='submit'
               className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6 lg:right-2'
+              disabled={!authorization}
             >
               <CustomImage src='images/search.png' alt='Search icon' width={100} height={100} />
             </button>
@@ -210,8 +219,9 @@ export default function Home() {
             <select
               name='meal'
               id='meal'
-              className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+              className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
               onChange={handleChange}
+              disabled={!authorization}
             >
               <option value=''>Meal type</option>
               <option value='breakfast'>Breakfast</option>
@@ -226,8 +236,9 @@ export default function Home() {
             <select
               name='cuisine'
               id='cuisine'
-              className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+              className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
               onChange={handleChange}
+              disabled={!authorization}
             >
               <option value=''>Cuisine</option>
               <option value='american'>American</option>
@@ -257,8 +268,9 @@ export default function Home() {
             <select
               name='diet'
               id='diet'
-              className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+              className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
               onChange={handleChange}
+              disabled={!authorization}
             >
               <option value=''>Diet</option>
               <option value='balanced'>Balanced</option>
@@ -273,8 +285,9 @@ export default function Home() {
             <select
               name='time'
               id='time'
-              className='w-full px-2.5 py-3.5 rounded font-light text-sm'
+              className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
               onChange={handleChange}
+              disabled={!authorization}
             >
               <option value=''>Time</option>
               <option value='0-15'>0-15 min.</option>
@@ -284,8 +297,9 @@ export default function Home() {
             </select>
           </label>
           <button
-            className='grid-in-[search] bg-lightblue text-darkblue rounded flex justify-center items-center'
+            className='grid-in-[search] bg-lightblue text-darkblue rounded flex justify-center items-center disabled:opacity-50'
             type='submit'
+            disabled={!authorization}
           >
             <span className='mr-2'>Search</span>
             <span>
@@ -295,7 +309,7 @@ export default function Home() {
         </form>
       </section>
 
-      <section className='flex justify-center '>
+      <section className='flex justify-center'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
           {recipes &&
             recipes.map((recipe) => {

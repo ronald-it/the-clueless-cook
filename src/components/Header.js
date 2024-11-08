@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import HamburgerIcon from './HamburgerIcon';
 import Link from 'next/link';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Header({ toggleModal }) {
+  const { authorization, userLogout } = useContext(AuthContext);
   return (
     <header className='bg-[#EEEEEE] flex justify-center'>
       <div className='flex px-8 justify-between items-center py-4 w-full max-w-2xl lg:max-w-7xl'>
@@ -20,12 +23,23 @@ export default function Header({ toggleModal }) {
             <Link href='/calculator'>
               <li>Calculator</li>
             </Link>
-            <Link href='/login'>
-              <li>Login</li>
-            </Link>
-            <Link href='/register'>
-              <li className='flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-2 px-6'>Register</li>
-            </Link>
+            {!authorization && (
+              <Link href='/login'>
+                <li>Login</li>
+              </Link>
+            )}
+            {authorization && (
+              <Link href='/' onClick={userLogout}>
+                <li>Logout</li>
+              </Link>
+            )}
+            {!authorization && (
+              <Link href='/register'>
+                <li className='flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-2 px-6'>
+                  Register
+                </li>
+              </Link>
+            )}
           </ul>
         </nav>
       </div>
