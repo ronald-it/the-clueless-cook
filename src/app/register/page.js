@@ -46,7 +46,7 @@ export default function Register() {
     <div className='flex justify-center py-6'>
       <div className='px-8 flex flex-col gap-y-4 sm:gap-y-6 w-full sm:max-w-2xl lg:max-w-7xl text-xs sm:text-sm lg:text-base'>
         <h2 className='text-darkblue'>Registration</h2>
-        <span>You can register an account down below.</span>
+        <span>Register an account down below.</span>
         <form
           className='bg-darkblue text-white p-6 flex flex-col gap-y-2 sm:gap-y-4 lg:gap-y-6 rounded-lg max-w-sm'
           onSubmit={handleSubmit}
