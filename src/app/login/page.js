@@ -8,9 +8,12 @@ export default function Login() {
   // Declare useContext variable
   const { userLogin } = useContext(AuthContext);
 
+  // Initialize useState
   const [login, setLogin] = useState({ username: '', password: '' });
   const [error, toggleError] = useState(false);
+  const [loginInProces, toggleLoginInProcess] = useState(false);
 
+  // handle changes in login input
   const handleChange = (event) => {
     const changedFieldName = event.target.name;
     const newValue = event.target.value;
@@ -21,12 +24,15 @@ export default function Login() {
     });
   };
 
+  // Handle submission of login form
   const handleSubmit = (event) => {
     event.preventDefault();
     postLogin();
   };
 
+  // Function to log in the user or notify the user of a wrong combination of username and password
   const postLogin = async () => {
+    toggleLoginInProcess(true);
     try {
       const response = await axios.post(
         'https://frontend-educational-backend.herokuapp.com/api/auth/signin',
@@ -40,6 +46,7 @@ export default function Login() {
     } catch (error) {
       toggleError(true);
     }
+    toggleLoginInProcess(false);
   };
 
   return (
@@ -90,6 +97,11 @@ export default function Login() {
           </Link>
           .
         </span>
+        {loginInProces && (
+          <span className='text-darkblue font-semibold'>
+            Login is being processed, please wait a moment.
+          </span>
+        )}
         {error && (
           <span className='text-red-500 font-semibold'>
             Incorrect username or password. Please try again.

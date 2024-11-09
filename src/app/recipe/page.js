@@ -13,13 +13,14 @@ const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 function RecipeContent() {
   // Declare searchParams to be able to extract the id from the URL
   const searchParams = useSearchParams();
+
   // Declare useStates for the recipe ID and recipe data
   const [id, setId] = useState(null);
   const [recipe, setRecipe] = useState(null);
   const [loading, toggleLoading] = useState(true);
   const [error, toggleError] = useState(false);
 
-  // Fill id state as soon as searchParams is filled
+  // useEffect to fill id state as soon as searchParams is filled
   useEffect(() => {
     if (searchParams) {
       const recipeId = searchParams.get('id');
@@ -27,6 +28,7 @@ function RecipeContent() {
     }
   }, [searchParams]);
 
+  // useEffect to set the recipe as soon as id is filled
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -187,7 +189,9 @@ function RecipeContent() {
             </section>
           </article>
         </div>
-      ) : ''}
+      ) : (
+        ''
+      )}
     </>
   );
 }

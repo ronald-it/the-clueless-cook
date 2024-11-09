@@ -14,7 +14,9 @@ const API_ID = '44920bbe';
 const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 
 export default function Home() {
+  // Declare useContext variable
   const { authorization } = useContext(AuthContext);
+
   // Initialize useState
   const [formState, setFormState] = useState({
     recipe: '',
@@ -31,6 +33,7 @@ export default function Home() {
   const [loadingCarouselRecipes, toggleLoadingCarouselRecipes] = useState(true);
   const [loading, toggleLoading] = useState(false);
 
+  // Handle changes in recipe search input and select elements
   const handleChange = (e) => {
     setFormState({
       ...formState,
@@ -38,10 +41,17 @@ export default function Home() {
     });
   };
 
+  // Handle submission of recipe search form
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchSearchResults(formState);
+  };
+
+  // Function to set the recipes based on the search section input
   const fetchSearchResults = async (searchParams) => {
     toggleLoading(true);
     toggleNoRecipesFound(false);
-    toggleSearchError(false)
+    toggleSearchError(false);
 
     const { recipe, meal, cuisine, diet, time } = searchParams;
     try {
@@ -73,6 +83,7 @@ export default function Home() {
     toggleLoading(false);
   };
 
+  // useEffect to fill the carousel recipe cards at initial page render
   useEffect(() => {
     const fetchCarouselRecipeCards = async () => {
       toggleLoadingCarouselRecipes(true);
@@ -211,15 +222,14 @@ export default function Home() {
           <section id='recipe-search' className='bg-darkblue flex justify-center relative'>
             {(!authorization || carouselError) && (
               <div className='absolute top-1/2 -translate-y-1/2 z-[9998] w-full h-full text-lg sm:text-xl text-darkblue font-bold bg-white/60 flex justify-center items-center shadow-3xl'>
-                {!authorization && <span className='p-8'>Please log in to access the recipe search.</span>}
+                {!authorization && (
+                  <span className='p-8'>Please log in to access the recipe search.</span>
+                )}
               </div>
             )}
             <form
               className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full'
-              onSubmit={(e) => {
-                e.preventDefault();
-                fetchSearchResults(formState);
-              }}
+              onSubmit={handleSubmit}
             >
               <label className='grid-in-[recipe] relative' htmlFor='recipe'>
                 <input
@@ -335,7 +345,9 @@ export default function Home() {
 
           <section className='flex justify-center'>
             {loading ? (
-              <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>Loading...</span>
+              <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>
+                Loading...
+              </span>
             ) : searchError ? (
               <div className='flex justify-center'>
                 <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>
