@@ -8,7 +8,9 @@ export default function Header({ toggleModal }) {
   return (
     <header className='bg-[#EEEEEE] flex justify-center'>
       <div className='flex px-8 justify-between items-center py-4 w-full max-w-2xl lg:max-w-7xl'>
-        <h1 className='font-light text-darkblue'>The Clueless Cook</h1>
+        <h1 className='font-light text-darkblue'>
+          <Link href='/'>The Clueless Cook</Link>
+        </h1>
         <button className='w-8 lg:hidden' onClick={toggleModal}>
           <HamburgerIcon />
         </button>

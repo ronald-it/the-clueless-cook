@@ -89,10 +89,11 @@ export default function Calculator() {
                   fetchProduct(productInput);
                 }}
               >
-                <label className='sm:w-full'>
+                <label className='sm:w-full' htmlFor='product'>
                   <div className='relative'>
                     <input
                       type='search'
+                      id='product'
                       placeholder='Barcode / product'
                       className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 lg:text-base lg:placeholder:text-base p-2'
                       onChange={(e) => setProductInput(e.target.value)}
@@ -164,10 +165,11 @@ export default function Calculator() {
                 className='flex justify-between sm:justify-start text-xs lg:text-base gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
                 onSubmit={handleCalculation}
               >
-                <label className='flex items-center'>Amount</label>
+                <label className='flex items-center' htmlFor='amount'>Amount</label>
                 <span>
                   <input
                     type='number'
+                    id='amount'
                     className='w-full h-full border-[0.1rem] border-black rounded p-2'
                     onChange={(e) => setServingSize(e.target.value)}
                   />

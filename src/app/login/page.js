@@ -52,9 +52,10 @@ export default function Login() {
           onSubmit={handleSubmit}
         >
           <div className='flex flex-col gap-y-1'>
-            <label>Username</label>
+            <label htmlFor='username'>Username</label>
             <input
               name='username'
+              id='username'
               type='text'
               className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
@@ -62,9 +63,10 @@ export default function Login() {
             />
           </div>
           <div className='flex flex-col gap-y-1'>
-            <label>Password</label>
+            <label htmlFor='password'>Password</label>
             <input
               name='password'
+              id='password'
               type='password'
               className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
