@@ -25,6 +25,11 @@ export default function Home() {
   });
   const [carouselRecipeCards, setCarouselRecipeCards] = useState();
   const [recipes, setRecipes] = useState();
+  const [carouselError, toggleCarouselError] = useState(false);
+  const [searchError, toggleSearchError] = useState(false);
+  const [noRecipesFound, toggleNoRecipesFound] = useState(false);
+  const [loadingCarouselRecipes, toggleLoadingCarouselRecipes] = useState(true);
+  const [loading, toggleLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormState({
@@ -34,6 +39,10 @@ export default function Home() {
   };
 
   const fetchSearchResults = async (searchParams) => {
+    toggleLoading(true);
+    toggleNoRecipesFound(false);
+    toggleSearchError(false)
+
     const { recipe, meal, cuisine, diet, time } = searchParams;
     try {
       const requiredApiParams = {
@@ -55,13 +64,19 @@ export default function Home() {
 
       const recipesData = response.data.hits.map((hit) => hit.recipe);
       setRecipes(recipesData.slice(0, recipesData.length - 2));
+      if (response.data.hits.length === 0) {
+        toggleNoRecipesFound(true);
+      }
     } catch (error) {
-      console.log(error);
+      toggleSearchError(true);
     }
+    toggleLoading(false);
   };
 
   useEffect(() => {
-    async function fetchCarouselRecipeCards() {
+    const fetchCarouselRecipeCards = async () => {
+      toggleLoadingCarouselRecipes(true);
+      toggleCarouselError(false);
       const recipeKeywords = [
         'Pizza',
         'Spaghetti',
@@ -124,9 +139,10 @@ export default function Home() {
           getRandomRecipe(responseThree.data.hits),
         ]);
       } catch (error) {
-        console.log(error);
+        toggleCarouselError(true);
       }
-    }
+      toggleLoadingCarouselRecipes(false);
+    };
 
     if (!carouselRecipeCards) {
       fetchCarouselRecipeCards();
@@ -135,7 +151,7 @@ export default function Home() {
 
   return (
     <>
-      {carouselRecipeCards ? (
+      {!loadingCarouselRecipes ? (
         <>
           <section className='relative'>
             <CustomImage
@@ -161,33 +177,41 @@ export default function Home() {
             </div>
           </section>
 
-          <section className='-mt-16 relative lg:flex lg:justify-center lg:items-center'>
-            <Slider carouselRecipes={carouselRecipeCards} />
-            <div className='hidden lg:flex lg:justify-center lg:items-center lg:w-full lg:max-w-7xl lg:mb-8 lg:px-8'>
-              {carouselRecipeCards &&
-                carouselRecipeCards.map((recipe, index) => {
-                  return (
-                    <RecipeCard
-                      key={recipe.uri.split('_')[1]}
-                      link={`/recipe?id=${recipe.uri.split('_')[1]}`}
-                      image={recipe.image}
-                      name={recipe.label}
-                      calories={recipe.calories}
-                      ingredients={recipe.ingredients.length}
-                      time={recipe.totalTime}
-                      gradientRight={index == 0}
-                      gradientLeft={index == 2}
-                      index={index}
-                    />
-                  );
-                })}
+          {!carouselError ? (
+            <section className='-mt-16 relative lg:flex lg:justify-center lg:items-center'>
+              <Slider carouselRecipes={carouselRecipeCards} />
+              <div className='hidden lg:flex lg:justify-center lg:items-center lg:w-full lg:max-w-7xl lg:mb-8 lg:px-8'>
+                {carouselRecipeCards &&
+                  carouselRecipeCards.map((recipe, index) => {
+                    return (
+                      <RecipeCard
+                        key={recipe.uri.split('_')[1]}
+                        link={`/recipe?id=${recipe.uri.split('_')[1]}`}
+                        image={recipe.image}
+                        name={recipe.label}
+                        calories={recipe.calories}
+                        ingredients={recipe.ingredients.length}
+                        time={recipe.totalTime}
+                        gradientRight={index == 0}
+                        gradientLeft={index == 2}
+                        index={index}
+                      />
+                    );
+                  })}
+              </div>
+            </section>
+          ) : (
+            <div className='flex justify-center'>
+              <span className='flex justify-center px-8 my-8 text-red-500 font-bold w-full max-w-2xl'>
+                API Request limit has been reached, please try again later.
+              </span>
             </div>
-          </section>
+          )}
 
           <section id='recipe-search' className='bg-darkblue flex justify-center relative'>
-            {!authorization && (
+            {(!authorization || carouselError) && (
               <div className='absolute top-1/2 -translate-y-1/2 z-[9998] w-full h-full text-lg sm:text-xl text-darkblue font-bold bg-white/60 flex justify-center items-center shadow-3xl'>
-                <span className='p-8'>Please log in to access the recipe search.</span>
+                {!authorization && <span className='p-8'>Please log in to access the recipe search.</span>}
               </div>
             )}
             <form
@@ -207,12 +231,12 @@ export default function Home() {
                   type='search'
                   placeholder='Recipe search'
                   onChange={handleChange}
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 />
                 <button
                   type='submit'
                   className='h-4 w-4 absolute top-1/2 -translate-y-1/2 right-6 lg:right-2'
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 >
                   <CustomImage src='images/search.png' alt='Search icon' width={100} height={100} />
                 </button>
@@ -223,7 +247,7 @@ export default function Home() {
                   id='meal'
                   className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
                   onChange={handleChange}
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 >
                   <option value=''>Meal type</option>
                   <option value='breakfast'>Breakfast</option>
@@ -240,7 +264,7 @@ export default function Home() {
                   id='cuisine'
                   className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
                   onChange={handleChange}
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 >
                   <option value=''>Cuisine</option>
                   <option value='american'>American</option>
@@ -272,7 +296,7 @@ export default function Home() {
                   id='diet'
                   className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
                   onChange={handleChange}
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 >
                   <option value=''>Diet</option>
                   <option value='balanced'>Balanced</option>
@@ -289,7 +313,7 @@ export default function Home() {
                   id='time'
                   className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
                   onChange={handleChange}
-                  disabled={!authorization}
+                  disabled={!authorization || carouselError}
                 >
                   <option value=''>Time</option>
                   <option value='0-15'>0-15 min.</option>
@@ -301,7 +325,7 @@ export default function Home() {
               <button
                 className='grid-in-[search] bg-lightblue text-darkblue rounded flex justify-center items-center disabled:opacity-50'
                 type='submit'
-                disabled={!authorization}
+                disabled={!authorization || carouselError}
               >
                 <span className='mr-2'>Search</span>
                 <span>
@@ -312,22 +336,38 @@ export default function Home() {
           </section>
 
           <section className='flex justify-center'>
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
-              {recipes &&
-                recipes.map((recipe) => {
-                  return (
-                    <RecipeCard
-                      key={recipe.uri.split('_')[1]}
-                      link={`/recipe?id=${recipe.uri.split('_')[1]}`}
-                      image={recipe.image}
-                      name={recipe.label}
-                      calories={recipe.calories}
-                      ingredients={recipe.ingredients.length}
-                      time={recipe.totalTime}
-                    />
-                  );
-                })}
-            </div>
+            {loading ? (
+              <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>Loading...</span>
+            ) : searchError ? (
+              <div className='flex justify-center'>
+                <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>
+                  Something went wrong during the retrieval of the data, please refresh the page.
+                </span>
+              </div>
+            ) : noRecipesFound ? (
+              <div className='flex justify-center'>
+                <span className='flex justify-center text-sm px-8 my-8 w-full max-w-2xl'>
+                  No recipes have been found.
+                </span>
+              </div>
+            ) : (
+              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
+                {recipes &&
+                  recipes.map((recipe) => {
+                    return (
+                      <RecipeCard
+                        key={recipe.uri.split('_')[1]}
+                        link={`/recipe?id=${recipe.uri.split('_')[1]}`}
+                        image={recipe.image}
+                        name={recipe.label}
+                        calories={recipe.calories}
+                        ingredients={recipe.ingredients.length}
+                        time={recipe.totalTime}
+                      />
+                    );
+                  })}
+              </div>
+            )}
           </section>
         </>
       ) : (
