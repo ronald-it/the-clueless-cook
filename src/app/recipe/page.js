@@ -46,7 +46,7 @@ function RecipeContent() {
     }
   }, [id]);
 
-  if (!recipe) return <div>Loading recipe...</div>;
+  if (!recipe) return <span>Loading...</span>;
 
   return (
     <div className='flex justify-center'>
