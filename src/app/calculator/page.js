@@ -19,6 +19,7 @@ export default function Calculator() {
   const [searchResults, setSearchResults] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
   const [totalMacros, setTotalMacros] = useState({ calories: 0, fat: 0, carbs: 0 });
+  const [error, toggleError] = useState(false)
 
   const fetchProduct = async (input) => {
     try {
@@ -32,7 +33,7 @@ export default function Calculator() {
       });
       setSearchResults([...searchResults, response.data.parsed[0].food]);
     } catch (error) {
-      console.log(error);
+      toggleError(true)
     }
   };
 
@@ -122,6 +123,8 @@ export default function Calculator() {
                 </button>
               </form>
             </section>
+
+            {error && <span className='text-xs font-bold text-red-500'>An error has occurred, please refresh the page and try again.</span>}
 
             {searchResults?.length > 0 && (
               <section>
