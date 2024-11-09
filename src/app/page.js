@@ -218,9 +218,7 @@ export default function Home() {
               className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full'
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log('pre fired');
                 fetchSearchResults(formState);
-                console.log('post fired');
               }}
             >
               <label className='grid-in-[recipe] relative' htmlFor='recipe'>

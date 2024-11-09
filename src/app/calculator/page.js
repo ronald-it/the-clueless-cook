@@ -70,9 +70,6 @@ export default function Calculator() {
     setTotalMacros({ calories: totalCalories, fat: totalFat, carbs: totalCarbs });
   }, [addedProducts]);
 
-  useEffect(() => console.log(searchResults, searchResults?.length), [searchResults]);
-  useEffect(() => console.log(addedProducts, addedProducts?.length), [addedProducts]);
-
   return (
     <div className='flex justify-center py-6'>
       <div className='px-8 flex flex-col gap-y-8 w-full sm:max-w-2xl lg:max-w-7xl'>
