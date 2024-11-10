@@ -6,7 +6,7 @@ export const metadata = {
   title: 'The Clueless Cook',
   description: 'A web app for searching and exploring recipes',
   icons: {
-    icon: '/images/favicon-32x32.png',
+    icon: '/images/favicon.svg',
   },
 };
 

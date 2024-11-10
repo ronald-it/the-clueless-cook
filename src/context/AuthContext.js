@@ -61,7 +61,7 @@ export function AuthContextProvider({ children }) {
 
   return (
     <AuthContext.Provider value={data}>
-      {isAuth.status === 'done' ? children : <p>Loading...</p>}
+      {isAuth.status === 'done' ? children : <span>Loading...</span>}
     </AuthContext.Provider>
   );
 }

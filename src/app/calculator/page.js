@@ -12,14 +12,48 @@ const API_ID = 'ec73a27a';
 const API_KEY = '270cc5a42e9022d3b8f92f30feed3e6e';
 
 export default function Calculator() {
+  // Declare useContext variable
   const { authorization } = useContext(AuthContext);
 
+  // Initialize useState
   const [productInput, setProductInput] = useState();
   const [servingSize, setServingSize] = useState();
   const [searchResults, setSearchResults] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
   const [totalMacros, setTotalMacros] = useState({ calories: 0, fat: 0, carbs: 0 });
+  const [error, toggleError] = useState(false);
 
+  // Handle changes in product input
+  const handleProductInput = (event) => {
+    setProductInput(event.target.value)
+  }
+
+  // Handle changes in serving size
+  const handleServingSize = (event) => {
+    setServingSize(event.target.value)
+  }
+
+  // Handle submission of product input
+  const handleProductFetch = (event) => {
+    event.preventDefault();
+    fetchProduct(productInput);
+  };
+
+  // Handle submission of serving size to set the added products state
+  const handleCalculation = (event) => {
+    event.preventDefault();
+
+    const productsWithServingSize = searchResults.map((product) => ({
+      ...product,
+      servingSize: parseInt(servingSize),
+    }));
+
+    setAddedProducts((prevAddedProducts) => [...prevAddedProducts, ...productsWithServingSize]);
+
+    setSearchResults([]);
+  };
+
+  // Function to retrieve product based on the user's product input
   const fetchProduct = async (input) => {
     try {
       const response = await axios.get(`${URI}${endpoint}`, {
@@ -32,23 +66,11 @@ export default function Calculator() {
       });
       setSearchResults([...searchResults, response.data.parsed[0].food]);
     } catch (error) {
-      console.log(error);
+      toggleError(true);
     }
   };
 
-  const handleCalculation = (e) => {
-    e.preventDefault();
-
-    const productsWithServingSize = searchResults.map((product) => ({
-      ...product,
-      servingSize: parseInt(servingSize),
-    }));
-
-    setAddedProducts((prevAddedProducts) => [...prevAddedProducts, ...productsWithServingSize]);
-
-    setSearchResults([]);
-  };
-
+  // useEffect that calculates the calorie, fat and carbs totals for the calorie table
   useEffect(() => {
     const totalCalories = addedProducts
       .map((product) => Math.round(product.nutrients.ENERC_KCAL * product.servingSize))
@@ -69,9 +91,6 @@ export default function Calculator() {
     setTotalMacros({ calories: totalCalories, fat: totalFat, carbs: totalCarbs });
   }, [addedProducts]);
 
-  useEffect(() => console.log(searchResults, searchResults?.length), [searchResults]);
-  useEffect(() => console.log(addedProducts, addedProducts?.length), [addedProducts]);
-
   return (
     <div className='flex justify-center py-6'>
       <div className='px-8 flex flex-col gap-y-8 w-full sm:max-w-2xl lg:max-w-7xl'>
@@ -84,18 +103,16 @@ export default function Calculator() {
             <section>
               <form
                 className='flex flex-col gap-y-2 sm:flex-row sm:gap-x-2 sm:max-w-md'
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  fetchProduct(productInput);
-                }}
+                onSubmit={handleProductFetch}
               >
-                <label className='sm:w-full'>
+                <label className='sm:w-full' htmlFor='product'>
                   <div className='relative'>
                     <input
                       type='search'
+                      id='product'
                       placeholder='Barcode / product'
                       className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 lg:text-base lg:placeholder:text-base p-2'
-                      onChange={(e) => setProductInput(e.target.value)}
+                      onChange={handleProductInput}
                     />
                     <button
                       className='w-5 h-5 absolute top-0 translate-y-1/3 lg:translate-y-1/2 right-4'
@@ -121,6 +138,12 @@ export default function Calculator() {
                 </button>
               </form>
             </section>
+
+            {error && (
+              <span className='text-xs font-bold text-red-500'>
+                An error has occurred, please refresh the page and try again.
+              </span>
+            )}
 
             {searchResults?.length > 0 && (
               <section>
@@ -164,12 +187,15 @@ export default function Calculator() {
                 className='flex justify-between sm:justify-start text-xs lg:text-base gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
                 onSubmit={handleCalculation}
               >
-                <label className='flex items-center'>Amount</label>
+                <label className='flex items-center' htmlFor='amount'>
+                  Amount
+                </label>
                 <span>
                   <input
                     type='number'
+                    id='amount'
                     className='w-full h-full border-[0.1rem] border-black rounded p-2'
-                    onChange={(e) => setServingSize(e.target.value)}
+                    onChange={handleServingSize}
                   />
                 </span>
                 <span>Serving(s)</span>

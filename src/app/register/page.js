@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Register() {
+  // Initialize useState
   const [registration, setRegistration] = useState({ email: '', username: '', password: '' });
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [error, toggleError] = useState(false);
+  const [registrationInProces, toggleRegistrationInProcess] = useState(false);
 
+  // handle changes in registration input
   const handleChange = (event) => {
     const changedFieldName = event.target.name;
     const newValue = event.target.value;
@@ -18,12 +21,15 @@ export default function Register() {
     });
   };
 
+  // Handle submission of registration form
   const handleSubmit = (event) => {
     event.preventDefault();
     postRegistration();
   };
 
+  // Function to register the user or notify the user of incorrect input to complete the registration
   const postRegistration = async () => {
+    toggleRegistrationInProcess(true);
     try {
       const response = await axios.post(
         'https://frontend-educational-backend.herokuapp.com/api/auth/signup',
@@ -40,6 +46,7 @@ export default function Register() {
       toggleError(true);
       setSubmissionMessage(error.response.data.message);
     }
+    toggleRegistrationInProcess(false);
   };
 
   return (
@@ -52,9 +59,10 @@ export default function Register() {
           onSubmit={handleSubmit}
         >
           <div className='flex flex-col gap-y-1'>
-            <label>Email address</label>
+            <label htmlFor='email'>Email address</label>
             <input
               name='email'
+              id='email'
               type='email'
               className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
@@ -62,9 +70,10 @@ export default function Register() {
             />
           </div>
           <div className='flex flex-col gap-y-1'>
-            <label>Username</label>
+            <label htmlFor='username'>Username</label>
             <input
               name='username'
+              id='username'
               type='text'
               className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
@@ -72,9 +81,10 @@ export default function Register() {
             />
           </div>
           <div className='flex flex-col gap-y-1'>
-            <label>Password</label>
+            <label htmlFor='password'>Password</label>
             <input
               name='password'
+              id='password'
               type='password'
               className='rounded-md py-2 text-black px-2'
               onChange={handleChange}
@@ -98,6 +108,11 @@ export default function Register() {
           </Link>
           .
         </span>
+        {registrationInProces && (
+          <span className='text-darkblue font-semibold'>
+            Registration is being processed, please wait a moment.
+          </span>
+        )}
         {submissionMessage && (
           <span className={`${error ? 'text-red-500' : 'text-green-500'} font-semibold`}>
             {submissionMessage}
