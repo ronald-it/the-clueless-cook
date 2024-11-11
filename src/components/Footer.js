@@ -1,8 +1,9 @@
+import React, { forwardRef } from 'react';
 import CustomImage from './CustomImage/CustomImage';
 
-export default function Footer() {
+const Footer = forwardRef((_, ref) => {
   return (
-    <footer id='footer' className='bg-darkblue py-6 lg:py-14 flex justify-center'>
+    <footer ref={ref} id='footer' className='bg-darkblue py-6 lg:py-14 flex justify-center'>
       <div className='flex flex-col px-8 gap-y-8 sm:flex-row sm:justify-between sm:[&>*]:justify-start sm:w-full sm:max-w-2xl lg:max-w-7xl'>
         <div className='flex flex-col items-center sm:items-start gap-y-2 [&>*:first-child]:text-xl [&>*:first-child]:mb-2 [&>*:first-child]:text-lightblue [&>*:first-child]:font-semibold sm:[&>*:first-child]:text-lg [&>*]:text-sm sm:[&>*]:text-xs lg:[&>*:first-child]:text-xl lg:[&>*]:text-sm [&>*]:text-white [&>*]:font-light'>
           <h3>Information</h3>
@@ -51,4 +52,8 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+Footer.displayName = 'Footer';
+
+export default Footer;

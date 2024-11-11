@@ -5,7 +5,7 @@ import styles from './NavigationModal.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-export default function NavigationModal({ isModalOpen, toggleModal }) {
+export default function NavigationModal({ isModalOpen, toggleModal, scrollToFooter }) {
   const { authorization, userLogout } = useContext(AuthContext);
   return (
     <ReactModal
@@ -29,9 +29,7 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
           <Link href='/'>Home</Link>
         </button>
         <span className='border-[0.05rem] border-white'></span>
-        <button onClick={toggleModal}>
-          <a href='#footer'>About</a>
-        </button>
+        <button onClick={scrollToFooter}>About</button>
         <span className='border-[0.05rem] border-white'></span>
         <button onClick={toggleModal}>
           <Link href='/calculator'>Calculator</Link>
