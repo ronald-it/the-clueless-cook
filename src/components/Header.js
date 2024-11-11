@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import HamburgerIcon from './HamburgerIcon';
 import Link from 'next/link';
 import { AuthContext } from '../context/AuthContext';
+import { smoothScrollToSection } from '../utils/smoothScrollToSection';
 
 export default function Header({ toggleModal }) {
   const { authorization, userLogout } = useContext(AuthContext);
@@ -19,9 +20,9 @@ export default function Header({ toggleModal }) {
             <Link href='/'>
               <li>Home</li>
             </Link>
-            <a href='#footer'>
+            <button onClick={() => smoothScrollToSection('footer')}>
               <li>About</li>
-            </a>
+            </button>
             <Link href='/calculator'>
               <li>Calculator</li>
             </Link>

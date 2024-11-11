@@ -4,8 +4,9 @@ import Link from 'next/link';
 import styles from './NavigationModal.module.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { smoothScrollToSection } from '../../utils/smoothScrollToSection';
 
-export default function NavigationModal({ isModalOpen, toggleModal, scrollToFooter }) {
+export default function NavigationModal({ isModalOpen, toggleModal }) {
   const { authorization, userLogout } = useContext(AuthContext);
   return (
     <ReactModal
@@ -29,7 +30,16 @@ export default function NavigationModal({ isModalOpen, toggleModal, scrollToFoot
           <Link href='/'>Home</Link>
         </button>
         <span className='border-[0.05rem] border-white'></span>
-        <button onClick={scrollToFooter}>About</button>
+        <button
+          onClick={() => {
+            toggleModal();
+            setTimeout(() => {
+              smoothScrollToSection('footer');
+            }, 300);
+          }}
+        >
+          About
+        </button>
         <span className='border-[0.05rem] border-white'></span>
         <button onClick={toggleModal}>
           <Link href='/calculator'>Calculator</Link>

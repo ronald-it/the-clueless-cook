@@ -6,6 +6,7 @@ import Slider from '../components/Slider/Slider';
 import RecipeCard from '../components/RecipeCard';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { smoothScrollToSection } from '../utils/smoothScrollToSection';
 
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
@@ -176,15 +177,15 @@ export default function Home() {
             <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl lg:max-w-7xl px-8'>
               <h2 className='lg:text-5xl'>Delicious Recipes.</h2>
               <h2 className='font-light lg:text-4xl'>Daily Updated.</h2>
-              <a
-                href='#recipe-search'
+              <button
                 className='mt-2 lg:mt-4 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center w-fit'
+                onClick={() => smoothScrollToSection('recipe-search')}
               >
                 <span className='mr-1 py-1.5'>Find Recipes</span>
                 <span>
                   <ArrowRightIcon />
                 </span>
-              </a>
+              </button>
             </div>
           </section>
 
