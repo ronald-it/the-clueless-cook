@@ -62,6 +62,7 @@ export default function Slider({ carouselRecipes }) {
                 calories={recipe.calories}
                 ingredients={recipe.ingredients.length}
                 time={recipe.totalTime}
+                swiperSlide={true}
               />
             </SwiperSlide>
           );
