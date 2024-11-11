@@ -19,37 +19,46 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
         afterOpen: styles.customOverlayAfterOpen,
         beforeClose: styles.customOverlayBeforeClose,
       }}
-      className='relative w-[85%] max-w-sm h-[75vh] max-h-[28rem] p-6 bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light flex justify-center items-center focus:outline-none'
+      className='relative w-[85%] max-w-xs h-[75vh] max-h-[24rem] py-6 px-10 bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light flex justify-center items-center focus:outline-none'
     >
       <button className='absolute top-4 right-4 w-6' onClick={toggleModal}>
         <CloseIcon />
       </button>
-      <div className='flex flex-col w-3/4 justify-between items-center [&>*]:w-full [&>*]:flex [&>*]:justify-center [&>*]:mb-4 [&>*]:pb-4 [&>*]:border-b-2 [&>*]:border-white [&>*:last-child]:border-none [&>*:last-child]:m-0 [&>*:last-child]:p-0'>
+      <div className='flex flex-col h-full w-full justify-between items-center [&>*]:w-full [&>*]:flex [&>*]:justify-center'>
         <button onClick={toggleModal}>
           <Link href='/'>Home</Link>
         </button>
+        <span className='border-[0.05rem] border-white'></span>
         <button onClick={toggleModal}>
           <a href='#footer'>About</a>
         </button>
+        <span className='border-[0.05rem] border-white'></span>
         <button onClick={toggleModal}>
           <Link href='/calculator'>Calculator</Link>
         </button>
+        <span className='border-[0.05rem] border-white'></span>
         {!authorization && (
-          <button onClick={toggleModal}>
-            <Link href='/login'>Login</Link>
-          </button>
+          <>
+            <button onClick={toggleModal}>
+              <Link href='/login'>Login</Link>
+            </button>
+            <span className='border-[0.05rem] border-white'></span>
+          </>
         )}
         {authorization && (
-          <button
-            onClick={() => {
-              toggleModal();
-              setTimeout(() => {
-                userLogout();
-              }, 300);
-            }}
-          >
-            <Link href='/'>Logout</Link>
-          </button>
+          <>
+            <button
+              onClick={() => {
+                toggleModal();
+                setTimeout(() => {
+                  userLogout();
+                }, 300);
+              }}
+            >
+              <Link href='/'>Logout</Link>
+            </button>
+            <span className='border-[0.05rem] border-white'></span>
+          </>
         )}
         {!authorization && (
           <button onClick={toggleModal}>
