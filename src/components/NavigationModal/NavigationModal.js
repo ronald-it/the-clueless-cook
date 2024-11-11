@@ -19,7 +19,7 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
         afterOpen: styles.customOverlayAfterOpen,
         beforeClose: styles.customOverlayBeforeClose,
       }}
-      className='relative w-[85%] max-w-sm h-[75vh] max-h-[28rem] p-6 bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light flex justify-center items-center'
+      className='relative w-[85%] max-w-sm h-[75vh] max-h-[28rem] p-6 bg-darkblue rounded-xl [&>*]:text-white [&>*]:text-xl [&>*]:font-light flex justify-center items-center focus:outline-none'
     >
       <button className='absolute top-4 right-4 w-6' onClick={toggleModal}>
         <CloseIcon />
@@ -43,7 +43,9 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
           <button
             onClick={() => {
               toggleModal();
-              userLogout();
+              setTimeout(() => {
+                userLogout();
+              }, 300);
             }}
           >
             <Link href='/'>Logout</Link>
