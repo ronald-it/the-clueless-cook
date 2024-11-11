@@ -64,7 +64,7 @@ export default function Register() {
               name='email'
               id='email'
               type='email'
-              className='rounded-md py-2 text-black px-2'
+              className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={registration.email}
             />
@@ -75,7 +75,7 @@ export default function Register() {
               name='username'
               id='username'
               type='text'
-              className='rounded-md py-2 text-black px-2'
+              className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={registration.username}
             />
@@ -86,7 +86,7 @@ export default function Register() {
               name='password'
               id='password'
               type='password'
-              className='rounded-md py-2 text-black px-2'
+              className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={registration.password}
             />

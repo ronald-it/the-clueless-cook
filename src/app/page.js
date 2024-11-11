@@ -302,7 +302,7 @@ export default function Home() {
                 <input
                   name='recipe'
                   id='recipe'
-                  className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-sm lg:h-full disabled:bg-white disabled:opacity-50'
+                  className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-base lg:h-full disabled:bg-white disabled:opacity-50'
                   type='search'
                   placeholder='Recipe search'
                   onChange={handleSearchChange}

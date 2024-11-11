@@ -64,7 +64,7 @@ export default function Login() {
               name='username'
               id='username'
               type='text'
-              className='rounded-md py-2 text-black px-2'
+              className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={login.username}
             />
@@ -75,7 +75,7 @@ export default function Login() {
               name='password'
               id='password'
               type='password'
-              className='rounded-md py-2 text-black px-2'
+              className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={login.password}
             />
