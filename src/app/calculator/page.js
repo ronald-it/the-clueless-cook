@@ -125,7 +125,7 @@ export default function Calculator() {
                   </div>
                 </label>
                 <button
-                  className='relative bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full sm:w-40 text-xs lg:text-base py-2 rounded flex justify-center items-center'
+                  className='relative bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold w-full sm:w-40 text-xs sm:text-base py-2 rounded flex justify-center items-center'
                   type='submit'
                 >
                   <span className='mr-2'>Search</span>
@@ -184,7 +184,7 @@ export default function Calculator() {
                 className='flex justify-between sm:justify-start gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
                 onSubmit={handleCalculation}
               >
-                <label className='flex items-center' htmlFor='amount'>
+                <label className='flex items-center text-xs sm:text-base' htmlFor='amount'>
                   Amount
                 </label>
                 <span>
@@ -195,13 +195,13 @@ export default function Calculator() {
                     onChange={handleServingSize}
                   />
                 </span>
-                <span>Serving(s)</span>
+                <span className='text-xs sm:text-base'>Serving(s)</span>
                 <button
                   className='bg-lightblue text-darkblue border-[0.1rem] border-darkblue font-bold rounded whitespace-nowrap px-2 sm:px-4'
                   type='submit'
                 >
                   <span className='mr-2 font-light text-xl'>+</span>
-                  <span>Add</span>
+                  <span className='text-xs sm:text-base'>Add</span>
                 </button>
               </form>
             </section>

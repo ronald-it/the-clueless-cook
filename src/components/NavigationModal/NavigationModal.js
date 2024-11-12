@@ -54,7 +54,6 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
           </>
         )}
         {authorization && (
-          <>
             <button
               onClick={() => {
                 toggleModal();
@@ -65,8 +64,6 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
             >
               <Link href='/'>Logout</Link>
             </button>
-            <span className='border-[0.05rem] border-white'></span>
-          </>
         )}
         {!authorization && (
           <button onClick={toggleModal}>
