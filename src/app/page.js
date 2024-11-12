@@ -1,11 +1,13 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
 import CustomImage from '../components/CustomImage/CustomImage';
-import ArrowRightIcon from '../components/ArrowRightIcon';
+import ArrowRightIcon from '../components/icons/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
-import RecipeCard from '../components/RecipeCard';
+import RecipeCard from '../components/RecipeCard/RecipeCard';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { smoothScrollToSection } from '../utils/smoothScrollToSection';
+import SelectMenu from '../components/SelectMenu/SelectMenu';
 
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
@@ -33,11 +35,76 @@ export default function Home() {
   const [loadingCarouselRecipes, toggleLoadingCarouselRecipes] = useState(true);
   const [loading, toggleLoading] = useState(false);
 
-  // Handle changes in recipe search input and select elements
-  const handleChange = (e) => {
+  // Options for the meal type select menu
+  const mealTypeOptions = [
+    { value: '', label: 'Meal type' },
+    { value: 'breakfast', label: 'Breakfast' },
+    { value: 'brunch', label: 'Brunch' },
+    { value: 'lunch', label: 'Lunch' },
+    { value: 'dinner', label: 'Dinner' },
+    { value: 'snack', label: 'Snack' },
+    { value: 'teatime', label: 'Tea time' },
+  ];
+
+  // Options for the cuisine type select menu
+  const cuisineTypeOptions = [
+    { value: '', label: 'Cuisine' },
+    { value: 'american', label: 'American' },
+    { value: 'asian', label: 'Asian' },
+    { value: 'british', label: 'British' },
+    { value: 'caribbean', label: 'Caribbean' },
+    { value: 'central europe', label: 'Central Europe' },
+    { value: 'chinese', label: 'Chinese' },
+    { value: 'eastern europe', label: 'Eastern Europe' },
+    { value: 'french', label: 'French' },
+    { value: 'greek', label: 'Greek' },
+    { value: 'indian', label: 'Indian' },
+    { value: 'italian', label: 'Italian' },
+    { value: 'japanese', label: 'Japanese' },
+    { value: 'korean', label: 'Korean' },
+    { value: 'kosher', label: 'Kosher' },
+    { value: 'mediterranean', label: 'Mediterranean' },
+    { value: 'mexican', label: 'Mexican' },
+    { value: 'middle eastern', label: 'Middle Eastern' },
+    { value: 'nordic', label: 'Nordic' },
+    { value: 'south american', label: 'South American' },
+    { value: 'south east asian', label: 'South East Asian' },
+    { value: 'world', label: 'World' },
+  ];
+
+  // Options for the diet type select menu
+  const dietTypeOptions = [
+    { value: '', label: 'Diet' },
+    { value: 'balanced', label: 'Balanced' },
+    { value: 'high-fiber', label: 'High-Fiber' },
+    { value: 'high-protein', label: 'High-Protein' },
+    { value: 'low-carb', label: 'Low-Carb' },
+    { value: 'low-fat', label: 'Low-Fat' },
+    { value: 'low-sodium', label: 'Low-Sodium' },
+  ];
+
+  // Options for the time select menu
+  const timeOptions = [
+    { value: '', label: 'Time' },
+    { value: '0-15', label: '0-15 min.' },
+    { value: '16-30', label: '16-30 min.' },
+    { value: '31-60', label: '31-60 min.' },
+    { value: '61%2B', label: 'More than 60 min.' },
+  ];
+
+  // Handle changes in recipe search input
+  const handleSearchChange = (e) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle changes in SelectMenu (react-select) elements
+  const handleSelectChange = (selectedOption, actionMeta) => {
+    setFormState({
+      ...formState,
+      [actionMeta.name]: selectedOption.value,
     });
   };
 
@@ -176,15 +243,15 @@ export default function Home() {
             <div className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&>*]:text-white [&>*:last-child]:text-darkblue [&>*]:text-nowrap w-full max-w-2xl lg:max-w-7xl px-8'>
               <h2 className='lg:text-5xl'>Delicious Recipes.</h2>
               <h2 className='font-light lg:text-4xl'>Daily Updated.</h2>
-              <a
-                href='#recipe-search'
+              <button
                 className='mt-2 lg:mt-4 bg-lightblue pl-2 pr-4 py-1 rounded-md text-xs font-semibold flex items-center w-fit'
+                onClick={() => smoothScrollToSection('recipe-search')}
               >
                 <span className='mr-1 py-1.5'>Find Recipes</span>
                 <span>
                   <ArrowRightIcon />
                 </span>
-              </a>
+              </button>
             </div>
           </section>
 
@@ -228,17 +295,17 @@ export default function Home() {
               </div>
             )}
             <form
-              className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full'
+              className='p-8 grid grid-areas-[recipe_recipe,meal_cuisine,diet_time,search_search] grid-cols-2 grid-rows-4 gap-y-5 gap-x-1 [&>*:last-child]:font-semibold lg:[&>*:first-child]:w-[100rem] xl:[&>*:first-child]:w-[150rem] w-full max-w-2xl lg:max-w-7xl lg:gap-y-0 lg:gap-x-6 lg:flex lg:[&>*]:w-full [&>*]:h-12'
               onSubmit={handleSubmit}
             >
               <label className='grid-in-[recipe] relative' htmlFor='recipe'>
                 <input
                   name='recipe'
                   id='recipe'
-                  className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-sm lg:h-full disabled:bg-white disabled:opacity-50'
+                  className='w-full pl-2.5 pr-12 lg:pr-6 py-3.5 rounded font-light text-base lg:h-full disabled:bg-white disabled:opacity-50'
                   type='search'
                   placeholder='Recipe search'
-                  onChange={handleChange}
+                  onChange={handleSearchChange}
                   disabled={!authorization || carouselError}
                 />
                 <button
@@ -250,85 +317,44 @@ export default function Home() {
                 </button>
               </label>
               <label className='grid-in-[meal]' htmlFor='meal'>
-                <select
+                <SelectMenu
                   name='meal'
                   id='meal'
-                  className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
-                  onChange={handleChange}
+                  defaultValue={mealTypeOptions[0]}
+                  onChange={handleSelectChange}
+                  options={mealTypeOptions}
                   disabled={!authorization || carouselError}
-                >
-                  <option value=''>Meal type</option>
-                  <option value='breakfast'>Breakfast</option>
-                  <option value='brunch'>Brunch</option>
-                  <option value='lunch'>Lunch</option>
-                  <option value='dinner'>Dinner</option>
-                  <option value='snack'>Snack</option>
-                  <option value='teatime'>Tea time</option>
-                </select>
+                />
               </label>
               <label className='grid-in-[cuisine]' htmlFor='cuisine'>
-                <select
+                <SelectMenu
                   name='cuisine'
                   id='cuisine'
-                  className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
-                  onChange={handleChange}
+                  defaultValue={cuisineTypeOptions[0]}
+                  onChange={handleSelectChange}
+                  options={cuisineTypeOptions}
                   disabled={!authorization || carouselError}
-                >
-                  <option value=''>Cuisine</option>
-                  <option value='american'>American</option>
-                  <option value='asian'>Asian</option>
-                  <option value='british'>British</option>
-                  <option value='caribbean'>Caribbean</option>
-                  <option value='central europe'>Central Europe</option>
-                  <option value='chinese'>Chinese</option>
-                  <option value='eastern europe'>Eastern Europe</option>
-                  <option value='french'>French</option>
-                  <option value='greek'>Greek</option>
-                  <option value='indian'>Indian</option>
-                  <option value='italian'>Italian</option>
-                  <option value='japanese'>Japanese</option>
-                  <option value='korean'>Korean</option>
-                  <option value='kosher'>Kosher</option>
-                  <option value='mediterranean'>Mediterranean</option>
-                  <option value='mexican'>Mexican</option>
-                  <option value='middle eastern'>Middle Eastern</option>
-                  <option value='nordic'>Nordic</option>
-                  <option value='south american'>South American</option>
-                  <option value='south east asian'>South East Asian</option>
-                  <option value='world'>World</option>
-                </select>
+                />
               </label>
               <label className='grid-in-[diet]' htmlFor='diet'>
-                <select
+                <SelectMenu
                   name='diet'
                   id='diet'
-                  className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
-                  onChange={handleChange}
+                  defaultValue={dietTypeOptions[0]}
+                  onChange={handleSelectChange}
+                  options={dietTypeOptions}
                   disabled={!authorization || carouselError}
-                >
-                  <option value=''>Diet</option>
-                  <option value='balanced'>Balanced</option>
-                  <option value='high-fiber'>High-Fiber</option>
-                  <option value='high-protein'>High-Protein</option>
-                  <option value='low-carb'>Low-Carb</option>
-                  <option value='low-fat'>Low-Fat</option>
-                  <option value='low-sodium'>Low-Sodium</option>
-                </select>
+                />
               </label>
               <label className='grid-in-[time]' htmlFor='time'>
-                <select
+                <SelectMenu
                   name='time'
                   id='time'
-                  className='w-full px-2.5 py-3.5 rounded font-light text-sm disabled:bg-white disabled:opacity-50'
-                  onChange={handleChange}
+                  defaultValue={timeOptions[0]}
+                  onChange={handleSelectChange}
+                  options={timeOptions}
                   disabled={!authorization || carouselError}
-                >
-                  <option value=''>Time</option>
-                  <option value='0-15'>0-15 min.</option>
-                  <option value='16-30'>16-30 min.</option>
-                  <option value='31-60'>31-60 min.</option>
-                  <option value='61%2B'>More than 60 min.</option>
-                </select>
+                />
               </label>
               <button
                 className='grid-in-[search] bg-lightblue text-darkblue rounded flex justify-center items-center disabled:opacity-50'
@@ -362,7 +388,8 @@ export default function Home() {
               </div>
             ) : (
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
-                {recipes &&
+                {authorization &&
+                  recipes &&
                   recipes.map((recipe) => {
                     return (
                       <RecipeCard

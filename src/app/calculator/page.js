@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import CustomImage from '../../components/CustomImage/CustomImage';
 import axios from 'axios';
-import ArrowRightIcon from '../../components/ArrowRightIcon';
+import ArrowRightIcon from '../../components/icons/ArrowRightIcon';
 import { AuthContext } from '../../context/AuthContext';
 
 // Declare variables for URI, endpoint, API ID and API Key
@@ -25,13 +25,13 @@ export default function Calculator() {
 
   // Handle changes in product input
   const handleProductInput = (event) => {
-    setProductInput(event.target.value)
-  }
+    setProductInput(event.target.value);
+  };
 
   // Handle changes in serving size
   const handleServingSize = (event) => {
-    setServingSize(event.target.value)
-  }
+    setServingSize(event.target.value);
+  };
 
   // Handle submission of product input
   const handleProductFetch = (event) => {
@@ -111,13 +111,10 @@ export default function Calculator() {
                       type='search'
                       id='product'
                       placeholder='Barcode / product'
-                      className='border-[0.1rem] border-black text-xs rounded w-full placeholder:text-xs placeholder:text-gray-600 lg:text-base lg:placeholder:text-base p-2'
+                      className='border-[0.1rem] border-black rounded w-full placeholder:text-gray-600 p-2'
                       onChange={handleProductInput}
                     />
-                    <button
-                      className='w-5 h-5 absolute top-0 translate-y-1/3 lg:translate-y-1/2 right-4'
-                      type='submit'
-                    >
+                    <button className='h-full w-5 absolute right-4' type='submit'>
                       <CustomImage
                         src='/images/search.png'
                         alt='Clock icon'
@@ -184,7 +181,7 @@ export default function Calculator() {
 
             <section>
               <form
-                className='flex justify-between sm:justify-start text-xs lg:text-base gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
+                className='flex justify-between sm:justify-start gap-x-2 sm:gap-x-4 h-8 [&>*]:h-full [&>*]:flex [&>*]:items-center'
                 onSubmit={handleCalculation}
               >
                 <label className='flex items-center' htmlFor='amount'>

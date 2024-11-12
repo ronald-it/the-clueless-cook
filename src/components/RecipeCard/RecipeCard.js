@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import CustomImage from './CustomImage/CustomImage';
+import CustomImage from '../CustomImage/CustomImage';
 import Image from 'next/image';
 
 export default function RecipeCard({
@@ -11,10 +11,11 @@ export default function RecipeCard({
   time,
   gradientRight = false,
   gradientLeft = false,
-  index
+  index,
+  swiperSlide = false
 }) {
   return (
-    <article className={`rounded-md shadow-3xl basis-[18rem] grow max-w-[24rem] lg:max-w-[28rem] swiper-slide ${index == 1 && '-mx-2 z-[9998]'} bg-white`}>
+    <article className={`rounded-md shadow-3xl basis-[18rem] grow max-w-[24rem] lg:max-w-[26rem] ${swiperSlide && 'swiper-slide'} ${index == 1 && '-mx-2 z-[9998]'} bg-white`}>
       <Link href={link}>
         <Image
           src={image}
