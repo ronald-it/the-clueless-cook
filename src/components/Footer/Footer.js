@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import CustomImage from './CustomImage/CustomImage';
+import CustomImage from '../CustomImage/CustomImage';
 
 const Footer = forwardRef((_, ref) => {
   return (

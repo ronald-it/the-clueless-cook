@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import HamburgerIcon from './HamburgerIcon';
+import HamburgerIcon from '../icons/HamburgerIcon';
 import Link from 'next/link';
-import { AuthContext } from '../context/AuthContext';
-import { smoothScrollToSection } from '../utils/smoothScrollToSection';
+import { AuthContext } from '../../context/AuthContext';
+import { smoothScrollToSection } from '../../utils/smoothScrollToSection';
 
 export default function Header({ toggleModal }) {
   const { authorization, userLogout } = useContext(AuthContext);

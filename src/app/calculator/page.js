@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import CustomImage from '../../components/CustomImage/CustomImage';
 import axios from 'axios';
-import ArrowRightIcon from '../../components/ArrowRightIcon';
+import ArrowRightIcon from '../../components/icons/ArrowRightIcon';
 import { AuthContext } from '../../context/AuthContext';
 
 // Declare variables for URI, endpoint, API ID and API Key

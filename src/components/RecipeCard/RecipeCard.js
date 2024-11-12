@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import CustomImage from './CustomImage/CustomImage';
+import CustomImage from '../CustomImage/CustomImage';
 import Image from 'next/image';
 
 export default function RecipeCard({

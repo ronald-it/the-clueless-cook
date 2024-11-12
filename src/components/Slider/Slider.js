@@ -5,9 +5,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect, useRef } from 'react';
-import RecipeCard from '../RecipeCard';
+import RecipeCard from '../RecipeCard/RecipeCard';
 import styles from './Slider.module.scss';
-import ArrowRightIcon from '../ArrowRightIcon';
+import ArrowRightIcon from '../icons/ArrowRightIcon';
 
 export default function Slider({ carouselRecipes }) {
   const swiperRef = useRef(null);

@@ -1,4 +1,4 @@
-import AppLayout from '../components/AppLayout';
+import AppLayout from '../components/AppLayout/AppLayout';
 import '../styles/globals.css';
 import FontLoader from './FontLoader';
 

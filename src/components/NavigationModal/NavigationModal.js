@@ -1,5 +1,5 @@
 import ReactModal from 'react-modal';
-import CloseIcon from '../CloseIcon';
+import CloseIcon from '../icons/CloseIcon';
 import Link from 'next/link';
 import styles from './NavigationModal.module.scss';
 import { useContext } from 'react';

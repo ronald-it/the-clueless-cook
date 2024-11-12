@@ -1,9 +1,9 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
 import CustomImage from '../components/CustomImage/CustomImage';
-import ArrowRightIcon from '../components/ArrowRightIcon';
+import ArrowRightIcon from '../components/icons/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
-import RecipeCard from '../components/RecipeCard';
+import RecipeCard from '../components/RecipeCard/RecipeCard';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { smoothScrollToSection } from '../utils/smoothScrollToSection';
@@ -388,7 +388,8 @@ export default function Home() {
               </div>
             ) : (
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 sm:gap-x-8 max-w-2xl lg:max-w-7xl p-8 lg:px-8 lg:py-14'>
-                {authorization && recipes &&
+                {authorization &&
+                  recipes &&
                   recipes.map((recipe) => {
                     return (
                       <RecipeCard
