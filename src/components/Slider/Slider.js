@@ -4,7 +4,7 @@ import { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import RecipeCard from '../RecipeCard';
 import styles from './Slider.module.scss';
 import ArrowRightIcon from '../ArrowRightIcon';
@@ -24,6 +24,19 @@ export default function Slider({ carouselRecipes }) {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setTimeout(() => {
+        if (swiperRef.current) {
+          swiperRef.current.update();
+        }
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Swiper
       onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -35,9 +48,11 @@ export default function Slider({ carouselRecipes }) {
         },
         451: {
           slidesPerView: 1.7,
-        }, 640: {
+        },
+        640: {
           slidesPerView: 2.2,
-        }, 768: {
+        },
+        768: {
           slidesPerView: 2.7,
         },
       }}
