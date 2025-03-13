@@ -26,24 +26,23 @@ export default function Register() {
     event.preventDefault();
     handleRegistration();
   };
-    
+
   // Function to register the user or notify the user of an error during registration
   const handleRegistration = async () => {
     toggleRegistrationInProcess(true);
     const { error } = await supabase.auth.signUp({
       email: registration.email,
       password: registration.password,
-    })
+    });
     if (!error) {
-      toggleError(false)
-      setSubmissionMessage("Registration successful!");
+      toggleError(false);
+      setSubmissionMessage('Registration successful!');
     } else {
-      toggleError(true)
-      setSubmissionMessage("Registration failed! Please try again or check your details.");
+      toggleError(true);
+      setSubmissionMessage('Registration failed! Please try again or check your details.');
     }
     toggleRegistrationInProcess(false);
-  }
-  
+  };
 
   return (
     <div className='flex justify-center py-6'>
