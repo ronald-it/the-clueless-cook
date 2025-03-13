@@ -1,10 +1,4 @@
 {
-    "cSpell.words": [
-        "anne",
-        "colton",
-        "Colton",
-        "Flexbox",
-        "irene"
-    ],
-    "svg.preview.background": "editor"
+  "cSpell.words": ["anne", "colton", "Colton", "Flexbox", "irene", "supabase"],
+  "svg.preview.background": "editor"
 }

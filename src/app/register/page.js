@@ -1,11 +1,11 @@
 'use client';
-import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
+import { supabase } from '../../utils/createClient';
 
 export default function Register() {
   // Initialize useState
-  const [registration, setRegistration] = useState({ email: '', username: '', password: '' });
+  const [registration, setRegistration] = useState({ email: '', password: '' });
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [error, toggleError] = useState(false);
   const [registrationInProces, toggleRegistrationInProcess] = useState(false);
@@ -24,30 +24,26 @@ export default function Register() {
   // Handle submission of registration form
   const handleSubmit = (event) => {
     event.preventDefault();
-    postRegistration();
+    handleRegistration();
   };
-
-  // Function to register the user or notify the user of incorrect input to complete the registration
-  const postRegistration = async () => {
+    
+  // Function to register the user or notify the user of an error during registration
+  const handleRegistration = async () => {
     toggleRegistrationInProcess(true);
-    try {
-      const response = await axios.post(
-        'https://frontend-educational-backend.herokuapp.com/api/auth/signup',
-        {
-          username: registration.username,
-          email: registration.email,
-          password: registration.password,
-          role: ['user'],
-        },
-      );
-      toggleError(false);
-      setSubmissionMessage(response.data.message);
-    } catch (error) {
-      toggleError(true);
-      setSubmissionMessage(error.response.data.message);
+    const { error } = await supabase.auth.signUp({
+      email: registration.email,
+      password: registration.password,
+    })
+    if (!error) {
+      toggleError(false)
+      setSubmissionMessage("Registration successful!");
+    } else {
+      toggleError(true)
+      setSubmissionMessage("Registration failed! Please try again or check your details.");
     }
     toggleRegistrationInProcess(false);
-  };
+  }
+  
 
   return (
     <div className='flex justify-center py-6'>
@@ -70,17 +66,6 @@ export default function Register() {
             />
           </div>
           <div className='flex flex-col gap-y-1'>
-            <label htmlFor='username'>Username</label>
-            <input
-              name='username'
-              id='username'
-              type='text'
-              className='rounded-md text-base py-2 text-black px-2'
-              onChange={handleChange}
-              value={registration.username}
-            />
-          </div>
-          <div className='flex flex-col gap-y-1'>
             <label htmlFor='password'>Password</label>
             <input
               name='password'
@@ -89,6 +74,7 @@ export default function Register() {
               className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
               value={registration.password}
+              minLength={6}
             />
           </div>
           <button
