@@ -1,9 +1,15 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { supabase } from '../../utils/createClient';
+import { useRouter } from 'next/navigation';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Login() {
+  // Declare useContext variable
+  const { getUser } = useContext(AuthContext);
+  // Initialize router object
+  const router = useRouter();
   // Initialize useState
   const [login, setLogin] = useState({ email: '', password: '' });
   const [error, toggleError] = useState(false);
@@ -27,20 +33,21 @@ export default function Login() {
   };
 
   // Function to log in the user or notify the user of a wrong combination of username and password
-    const handleLogin = async () => {
-      toggleLoginInProcess(true);
-      const { error } = await supabase.auth.signInWithPassword({
-        email: login.email,
-        password: login.password,
-      });
-      if (!error) {
-        toggleError(false);
-        redirect('/')
-      } else {
-        toggleError(true);
-      }
-      toggleLoginInProcess(false);
-    };
+  const handleLogin = async () => {
+    toggleLoginInProcess(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: login.email,
+      password: login.password,
+    });
+    if (!error) {
+      toggleError(false);
+      getUser();
+      router.push('/');
+    } else {
+      toggleError(true);
+    }
+    toggleLoginInProcess(false);
+  };
 
   return (
     <div className='flex justify-center py-6'>

@@ -5,9 +5,10 @@ import ArrowRightIcon from '../components/icons/ArrowRightIcon';
 import Slider from '../components/Slider/Slider';
 import RecipeCard from '../components/RecipeCard/RecipeCard';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 import { smoothScrollToSection } from '../utils/smoothScrollToSection';
 import SelectMenu from '../components/SelectMenu/SelectMenu';
+import { supabase } from '../utils/createClient';
+import { AuthContext } from '../context/AuthContext';
 
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
@@ -18,8 +19,8 @@ const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
 export default function Home() {
   // Declare useContext variable
   const { authorization } = useContext(AuthContext);
-
   // Initialize useState
+  const [user, setUser] = useState();
   const [formState, setFormState] = useState({
     recipe: '',
     meal: '',
@@ -149,6 +150,20 @@ export default function Home() {
     }
     toggleLoading(false);
   };
+
+  // useEffect to retrieve the user from the database
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+      }
+    };
+
+    getUser();
+  }, []);
 
   // useEffect to fill the carousel recipe cards at initial page render
   useEffect(() => {

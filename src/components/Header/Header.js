@@ -1,28 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import HamburgerIcon from '../icons/HamburgerIcon';
 import Link from 'next/link';
 import { smoothScrollToSection } from '../../utils/smoothScrollToSection';
 import { supabase } from '../../utils/createClient';
+import { useRouter } from 'next/navigation';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Header({ toggleModal }) {
-  const [user, setUser] = useState();
+  // Declare useContext variable
+  const { authorization, getUser } = useContext(AuthContext);
+  const router = useRouter();
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser();
-  };
-
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
-      }
-    };
-
     getUser();
-  }, []);
+    router.push('/');
+  };
 
   return (
     <header className='bg-[#EEEEEE] flex justify-center'>
@@ -44,17 +36,17 @@ export default function Header({ toggleModal }) {
             <Link href='/calculator'>
               <li>Calculator</li>
             </Link>
-            {!user && (
+            {!authorization && (
               <Link href='/login'>
                 <li>Login</li>
               </Link>
             )}
-            {user && (
-              <Link href='/' onClick={handleLogout}>
+            {authorization && (
+              <button href='/' onClick={handleLogout}>
                 <li>Logout</li>
-              </Link>
+              </button>
             )}
-            {!user && (
+            {!authorization && (
               <Link href='/register'>
                 <li className='flex justify-center bg-lightblue text-darkblue font-semibold rounded-md py-2 px-6'>
                   Register

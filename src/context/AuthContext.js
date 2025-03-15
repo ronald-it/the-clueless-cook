@@ -1,11 +1,11 @@
-import { useRouter } from 'next/navigation';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
+import * as React from 'react';
+import { supabase } from '../utils/createClient';
 
 // Create context
 export const AuthContext = React.createContext({});
 
-//Context provider function
+// Context provider function
 export function AuthContextProvider({ children }) {
   // Initialize useState of authorization checker
   const [isAuth, toggleIsAuth] = useState({
@@ -13,13 +13,11 @@ export function AuthContextProvider({ children }) {
     status: 'pending',
   });
 
-  // Declare router variable to handle navigation
-  const router = useRouter();
-
-  // useEffect to check for a token in the local storage at every refresh
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
       toggleIsAuth({
         authorization: true,
         status: 'done',
@@ -30,33 +28,17 @@ export function AuthContextProvider({ children }) {
         status: 'done',
       });
     }
+  };
+
+  // useEffect to check for a token in the local storage at every refresh
+  useEffect(() => {
+    getUser();
   }, []);
-
-  // Login function
-  function loginUser(token) {
-    localStorage.setItem('token', token);
-    toggleIsAuth({
-      authorization: true,
-      status: 'done',
-    });
-    router.push('/');
-  }
-
-  // Logout function
-  function logoutUser() {
-    localStorage.removeItem('token');
-    toggleIsAuth({
-      authorization: false,
-      status: 'done',
-    });
-  }
 
   // AuthContext provider, an object with the needed functions and states
   const data = {
     authorization: isAuth.authorization,
-    toggleAuth: toggleIsAuth,
-    userLogin: loginUser,
-    userLogout: logoutUser,
+    getUser: getUser,
   };
 
   return (

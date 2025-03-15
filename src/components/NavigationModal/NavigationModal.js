@@ -54,16 +54,16 @@ export default function NavigationModal({ isModalOpen, toggleModal }) {
           </>
         )}
         {authorization && (
-            <button
-              onClick={() => {
-                toggleModal();
-                setTimeout(() => {
-                  userLogout();
-                }, 300);
-              }}
-            >
-              <Link href='/'>Logout</Link>
-            </button>
+          <button
+            onClick={() => {
+              toggleModal();
+              setTimeout(() => {
+                userLogout();
+              }, 300);
+            }}
+          >
+            <Link href='/'>Logout</Link>
+          </button>
         )}
         {!authorization && (
           <button onClick={toggleModal}>

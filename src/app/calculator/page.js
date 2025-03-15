@@ -14,7 +14,6 @@ const API_KEY = '270cc5a42e9022d3b8f92f30feed3e6e';
 export default function Calculator() {
   // Declare useContext variable
   const { authorization } = useContext(AuthContext);
-
   // Initialize useState
   const [productInput, setProductInput] = useState();
   const [servingSize, setServingSize] = useState();
