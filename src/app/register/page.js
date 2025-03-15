@@ -2,11 +2,11 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { supabase } from '../../utils/createClient';
+import { redirect } from 'next/navigation';
 
 export default function Register() {
   // Initialize useState
   const [registration, setRegistration] = useState({ email: '', password: '' });
-  const [submissionMessage, setSubmissionMessage] = useState('');
   const [error, toggleError] = useState(false);
   const [registrationInProces, toggleRegistrationInProcess] = useState(false);
 
@@ -36,10 +36,9 @@ export default function Register() {
     });
     if (!error) {
       toggleError(false);
-      setSubmissionMessage('Registration successful!');
+      redirect('/')
     } else {
       toggleError(true);
-      setSubmissionMessage('Registration failed! Please try again or check your details.');
     }
     toggleRegistrationInProcess(false);
   };
@@ -98,9 +97,9 @@ export default function Register() {
             Registration is being processed, please wait a moment.
           </span>
         )}
-        {submissionMessage && (
-          <span className={`${error ? 'text-red-500' : 'text-green-500'} font-semibold`}>
-            {submissionMessage}
+        {error && (
+          <span className='text-red-500 font-semibold'>
+            Registration failed! Please try again or check your details.
           </span>
         )}
       </div>

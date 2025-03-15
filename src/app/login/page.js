@@ -1,15 +1,11 @@
 'use client';
-import axios from 'axios';
 import Link from 'next/link';
-import { useState, useContext, useEffect } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
+import { supabase } from '../../utils/createClient';
 
 export default function Login() {
-  // Declare useContext variable
-  const { userLogin } = useContext(AuthContext);
-
   // Initialize useState
-  const [login, setLogin] = useState({ username: '', password: '' });
+  const [login, setLogin] = useState({ email: '', password: '' });
   const [error, toggleError] = useState(false);
   const [loginInProces, toggleLoginInProcess] = useState(false);
 
@@ -27,27 +23,24 @@ export default function Login() {
   // Handle submission of login form
   const handleSubmit = (event) => {
     event.preventDefault();
-    postLogin();
+    handleLogin();
   };
 
   // Function to log in the user or notify the user of a wrong combination of username and password
-  const postLogin = async () => {
-    toggleLoginInProcess(true);
-    try {
-      const response = await axios.post(
-        'https://frontend-educational-backend.herokuapp.com/api/auth/signin',
-        {
-          username: login.username,
-          password: login.password,
-        },
-      );
-      userLogin(response.data.accessToken);
-      toggleError(false);
-    } catch (error) {
-      toggleError(true);
-    }
-    toggleLoginInProcess(false);
-  };
+    const handleLogin = async () => {
+      toggleLoginInProcess(true);
+      const { error } = await supabase.auth.signInWithPassword({
+        email: login.email,
+        password: login.password,
+      });
+      if (!error) {
+        toggleError(false);
+        redirect('/')
+      } else {
+        toggleError(true);
+      }
+      toggleLoginInProcess(false);
+    };
 
   return (
     <div className='flex justify-center py-6'>
@@ -59,14 +52,14 @@ export default function Login() {
           onSubmit={handleSubmit}
         >
           <div className='flex flex-col gap-y-1'>
-            <label htmlFor='username'>Username</label>
+            <label htmlFor='email'>Email</label>
             <input
-              name='username'
-              id='username'
-              type='text'
+              name='email'
+              id='email'
+              type='email'
               className='rounded-md text-base py-2 text-black px-2'
               onChange={handleChange}
-              value={login.username}
+              value={login.email}
             />
           </div>
           <div className='flex flex-col gap-y-1'>
