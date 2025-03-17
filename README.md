@@ -1,6 +1,6 @@
 # The Clueless Cook
 
-[Live Demo](https://ronald-it.github.io/the-clueless-cook/)
+[Live Demo](https://the-clueless-cook.onrender.com/)
 
 **The Clueless Cook** - A responsive web app that allows users to explore recipes and manage their nutritional intake through a calorie calculator. Both the recipe search and calorie calculator are exclusively accessible to logged-in users, making it a personalized experience.
 
@@ -16,7 +16,7 @@
 
 ## Description
 
-This project started as the final assignment for my frontend development bootcamp, initially created with a desktop-only design. Later, I enhanced the app for professional use as a portfolio project, commissioning mobile and tablet designs, and rebuilding it with Next.js and Tailwind CSS to ensure responsiveness on all screen sizes.
+This project started as the final assignment for my frontend development bootcamp, initially created with a desktop-only design. Later, I enhanced the app for professional use as a portfolio project, commissioning mobile and tablet designs, and rebuilding it Full-stack with Next.js and Tailwind CSS to ensure responsiveness on all screen sizes. The authentication for this app is built with a PostgreSQL database from Supabase, using its convenient in built methods for signing up, signing in and logging out users. 
 
 **The Clueless Cook** provides a seamless and engaging experience for users interested in recipes and tracking their nutritional intake. The app has three main sections:
 
