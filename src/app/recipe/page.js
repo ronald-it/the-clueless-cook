@@ -7,8 +7,8 @@ import Image from 'next/image';
 
 // Declare variables for URI, API ID, and API Key
 const URI = 'https://api.edamam.com';
-const API_ID = '44920bbe';
-const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
+const API_ID = process.env.NEXT_PUBLIC_RECIPE_API_ID
+const API_KEY = process.env.NEXT_PUBLIC_RECIPE_API_KEY
 
 function RecipeContent() {
   // Declare searchParams to be able to extract the id from the URL

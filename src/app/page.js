@@ -13,8 +13,8 @@ import { AuthContext } from '../context/AuthContext';
 // Declare variables for URI, endpoint, API ID and API Key
 const URI = 'https://api.edamam.com';
 const endpoint = '/api/recipes/v2';
-const API_ID = '44920bbe';
-const API_KEY = 'e0b07558906ed952fb1226ace4bc0227';
+const API_ID = process.env.NEXT_PUBLIC_RECIPE_API_ID
+const API_KEY = process.env.NEXT_PUBLIC_RECIPE_API_KEY
 
 export default function Home() {
   // Declare useContext variable
