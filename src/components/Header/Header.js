@@ -3,17 +3,14 @@ import HamburgerIcon from '../icons/HamburgerIcon';
 import Link from 'next/link';
 import { smoothScrollToSection } from '../../utils/smoothScrollToSection';
 import { supabase } from '../../utils/createClient';
-import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function Header({ toggleModal }) {
   // Declare useContext variable
-  const { authorization, getUser } = useContext(AuthContext);
-  const router = useRouter();
+  const { authorization } = useContext(AuthContext);
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    getUser();
-    router.push('/');
+    window.location.href = '/';
   };
 
   return (

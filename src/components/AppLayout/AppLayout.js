@@ -17,7 +17,7 @@ export default function AppLayout({ children }) {
       <div className='min-h-screen flex flex-col'>
         <Header toggleModal={toggleModal} />
         <NavigationModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
-        <main className='grow'>{children}</main>
+        <main className='grow relative'>{children}</main>
         <Footer />
       </div>
     </AuthContextProvider>

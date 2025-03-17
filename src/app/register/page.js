@@ -1,15 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../../utils/createClient';
-import { useRouter } from 'next/navigation';
-import { AuthContext } from '../../context/AuthContext';
 
 export default function Register() {
-  // Declare useContext variable
-  const { getUser } = useContext(AuthContext);
-  // Initialize router object
-  const router = useRouter();
   // Initialize useState
   const [registration, setRegistration] = useState({ email: '', password: '' });
   const [error, toggleError] = useState(false);
@@ -41,8 +35,7 @@ export default function Register() {
     });
     if (!error) {
       toggleError(false);
-      getUser();
-      router.push('/');
+      window.location.href = '/';
     } else {
       toggleError(true);
     }

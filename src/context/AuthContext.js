@@ -38,12 +38,11 @@ export function AuthContextProvider({ children }) {
   // AuthContext provider, an object with the needed functions and states
   const data = {
     authorization: isAuth.authorization,
-    getUser: getUser,
   };
 
   return (
     <AuthContext.Provider value={data}>
-      {isAuth.status === 'done' ? children : <span>Loading...</span>}
+      {isAuth.status === 'done' ? children : <span className='h-screen flex justify-center items-center'>Loading...</span>}
     </AuthContext.Provider>
   );
 }
